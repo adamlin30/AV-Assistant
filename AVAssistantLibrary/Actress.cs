@@ -73,7 +73,7 @@ namespace AVAssistantLibrary
             {
                 if (!actressNameInFileArr.Contains(actressNameAllArr[i]))
                 {
-                    actressScore.Insert(i, "0"); //if actress is not evalauted in csv, set 0 point
+                    actressScore.Insert(i, "-1"); //if actress is not evalauted in csv, set 0 point
                 }
                 item[0] = actressNameAllArr[i];
                 item[1] = actressScore[i];

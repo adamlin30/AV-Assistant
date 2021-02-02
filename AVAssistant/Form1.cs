@@ -244,18 +244,39 @@ namespace AVAssistant
 
         private void sortActressToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string[] cIDActress = videoFolder.Split(new string[] { " - " }, StringSplitOptions.RemoveEmptyEntries);
-            actressListBox.Text = cIDActress[1];
-            avTabControl.SelectedIndex = 1;
+            for (int i = 0; i < rankCheckedListBox.Items.Count; i++)
+            {
+                rankCheckedListBox.SetItemChecked(i, false); //uncheck the previously ranking
+            }
+            actressListBox.ClearSelected();
 
-            rankCheckedListBox.SetItemChecked(0, true);
+            string[] cIDActress = videoFolder.Split(new string[] { " - " }, StringSplitOptions.RemoveEmptyEntries);
+            actressListBox.Text = cIDActress[1]; //0:cID 1:actress
+            int score = -999;
+
+            foreach (DataGridViewRow row in actressDataGridView.Rows)
+            {
+                if (row.Cells[0].Value != null) //skip the last row
+                {
+                    //find the corresponding score for the actress
+                    if (actressListBox.Text.All(v => row.Cells[0].Value.ToString().Contains(v)))
+                    {
+                        score = int.Parse(row.Cells[1].Value.ToString());
+                    }
+                }
+            }
+
+            score = (score >= 5) ? 10 - score : 6; //score to rankCheckedListBox mapping
+
+            rankCheckedListBox.SetItemChecked(score, true);
             this.BeginInvoke(new Action(() =>
             {
-                int index = actressListBox.Items.IndexOf(cIDActress[1]);
-                actressListBox.SetSelected(index, true);
+                //highlight the actress
+                actressListBox.SetSelected(actressListBox.Items.IndexOf(cIDActress[1]), true);
             }
             ));
-            //need to enable address-score
+
+            avTabControl.SelectedIndex = 1;
         }
 
         private void exportGenreButton_Click(object sender, EventArgs e)
@@ -308,18 +329,18 @@ namespace AVAssistant
                 colGenre[i] = dtGenre.Rows[i]["Video"].ToString(); //build a genre array
             }
 
-            string[] addToGenre = colVideo.Except(colGenre).ToArray(); //add to genre
-            string[] removeFromGenre = colGenre.Except(colVideo).ToArray(); //remove from genre
+            string[] addToGenre = colVideo.Except(colGenre).ToArray(); //videos added to genre table
+            string[] removeFromGenre = colGenre.Except(colVideo).ToArray(); //videos removed from genre table
 
-            foreach (string s in removeFromGenre)
+            foreach (string r in removeFromGenre)
             {
-                int removeIndex = Array.IndexOf(colGenre, s);
+                int removeIndex = Array.IndexOf(colGenre, r);
                 dtGenre.Rows.Remove(dtGenre.Rows[removeIndex]);
             }
 
-            foreach (string s in addToGenre)
+            foreach (string a in addToGenre)
             {
-                dtGenre.Rows.Add(s, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                dtGenre.Rows.Add(a, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             }
 
             genreDataGridView.DataSource = dtGenre;
@@ -351,12 +372,12 @@ namespace AVAssistant
                 int sum = 0;
                 int counter = 0;
 
-                for (int i = 0; i < genreDataGridView.Rows.Count - 1; i++) //the last row is empty
+                for (int i = 0; i < genreDataGridView.Rows.Count - 1; i++) //skip the last row
                 {
                     sum = 0;
                     for (int j = 0; j < numOfGenreSelected; j++)
                     {
-                        int columnVal = int.Parse(genreSelectedArr[j]);
+                        int columnVal = int.Parse(genreSelectedArr[j]); //0:bondage 1:classic etc.
                         sum = sum + int.Parse(genreDataGridView.Rows[i].Cells[columnVal + 1].Value.ToString());
                     }
 
@@ -372,13 +393,12 @@ namespace AVAssistant
                 {
                     video.ListVideo(this.videoListBox, this.actressDataGridView, this.numOfFile);
                 }
-
             }));
-
         }
 
         private void genreToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //dynamically generate a new form as Genre Editor
             Form genreForm = new Form();
             genreForm.MinimizeBox = false;
             genreForm.MaximizeBox = false;
@@ -397,7 +417,6 @@ namespace AVAssistant
             exportGenreButton.Location = new Point(500, 500);
 
             genreForm.FormClosing += genreForm_FormClosing; //detect x button event
-
         }
 
         private void genreForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -405,8 +424,7 @@ namespace AVAssistant
             //Form f = sender as Form;
             Form f = (Form)sender;
             e.Cancel = true; //http://www.frogjumpjump.com/2018/12/windows-form.html
-            f.Hide();
-
+            f.Hide(); //hide new form
         }
     }
 }

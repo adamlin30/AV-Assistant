@@ -37,17 +37,19 @@
             this.infoTextBox = new System.Windows.Forms.TextBox();
             this.actressModeTabPage = new System.Windows.Forms.TabPage();
             this.actressModeGroupBox = new System.Windows.Forms.GroupBox();
-            this.VideoNumActressMode = new System.Windows.Forms.TextBox();
             this.rankCheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.VideoNumActressMode = new System.Windows.Forms.TextBox();
             this.actressVideoLabel = new System.Windows.Forms.Label();
             this.actressNameLabel = new System.Windows.Forms.Label();
             this.actressListBox = new System.Windows.Forms.ListBox();
             this.actressVideoTreeView = new System.Windows.Forms.TreeView();
+            this.rankGroupBox = new System.Windows.Forms.GroupBox();
             this.videoModeTabPage = new System.Windows.Forms.TabPage();
             this.videoModeGroupBox = new System.Windows.Forms.GroupBox();
             this.genreCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.numOfFile = new System.Windows.Forms.TextBox();
             this.fileSize = new System.Windows.Forms.TextBox();
+            this.vidoFileLabel = new System.Windows.Forms.Label();
             this.vidoListLabel = new System.Windows.Forms.Label();
             this.videoFileTreeView = new System.Windows.Forms.TreeView();
             this.videoListBox = new System.Windows.Forms.ListBox();
@@ -62,6 +64,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.searchCoverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortActressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.genreGroupBox = new System.Windows.Forms.GroupBox();
             this.avStudioTabPage = new System.Windows.Forms.TabPage();
             this.studioDataGridView = new System.Windows.Forms.DataGridView();
             this.avActressTabPage = new System.Windows.Forms.TabPage();
@@ -88,9 +91,6 @@
             this.tabImageList = new System.Windows.Forms.ImageList(this.components);
             this.coverPictureBox = new System.Windows.Forms.PictureBox();
             this.thumbnailBrowser = new System.Windows.Forms.FlowLayoutPanel();
-            this.vidoFileLabel = new System.Windows.Forms.Label();
-            this.genreGroupBox = new System.Windows.Forms.GroupBox();
-            this.rankGroupBox = new System.Windows.Forms.GroupBox();
             this.avTabControl.SuspendLayout();
             this.downloadTabPage.SuspendLayout();
             this.dowloadGroupBox.SuspendLayout();
@@ -152,7 +152,7 @@
             this.dowloadGroupBox.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dowloadGroupBox.Location = new System.Drawing.Point(6, 6);
             this.dowloadGroupBox.Name = "dowloadGroupBox";
-            this.dowloadGroupBox.Size = new System.Drawing.Size(517, 426);
+            this.dowloadGroupBox.Size = new System.Drawing.Size(584, 426);
             this.dowloadGroupBox.TabIndex = 2;
             this.dowloadGroupBox.TabStop = false;
             this.dowloadGroupBox.Text = "Setting";
@@ -162,7 +162,7 @@
             this.wgetLinks.Location = new System.Drawing.Point(6, 193);
             this.wgetLinks.Multiline = true;
             this.wgetLinks.Name = "wgetLinks";
-            this.wgetLinks.Size = new System.Drawing.Size(505, 227);
+            this.wgetLinks.Size = new System.Drawing.Size(572, 227);
             this.wgetLinks.TabIndex = 1;
             // 
             // infoTextBox
@@ -170,7 +170,7 @@
             this.infoTextBox.Location = new System.Drawing.Point(6, 26);
             this.infoTextBox.Multiline = true;
             this.infoTextBox.Name = "infoTextBox";
-            this.infoTextBox.Size = new System.Drawing.Size(505, 161);
+            this.infoTextBox.Size = new System.Drawing.Size(572, 161);
             this.infoTextBox.TabIndex = 0;
             // 
             // actressModeTabPage
@@ -204,14 +204,6 @@
             this.actressModeGroupBox.TabStop = false;
             this.actressModeGroupBox.Text = "Setting";
             // 
-            // VideoNumActressMode
-            // 
-            this.VideoNumActressMode.Location = new System.Drawing.Point(495, 17);
-            this.VideoNumActressMode.Name = "VideoNumActressMode";
-            this.VideoNumActressMode.ReadOnly = true;
-            this.VideoNumActressMode.Size = new System.Drawing.Size(80, 27);
-            this.VideoNumActressMode.TabIndex = 8;
-            // 
             // rankCheckedListBox
             // 
             this.rankCheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -224,12 +216,20 @@
             "7",
             "6",
             "5",
-            "0"});
+            "-1"});
             this.rankCheckedListBox.Location = new System.Drawing.Point(243, 57);
             this.rankCheckedListBox.Name = "rankCheckedListBox";
             this.rankCheckedListBox.Size = new System.Drawing.Size(102, 154);
             this.rankCheckedListBox.TabIndex = 6;
             this.rankCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.rankCheckedListBox_ItemCheck);
+            // 
+            // VideoNumActressMode
+            // 
+            this.VideoNumActressMode.Location = new System.Drawing.Point(495, 17);
+            this.VideoNumActressMode.Name = "VideoNumActressMode";
+            this.VideoNumActressMode.ReadOnly = true;
+            this.VideoNumActressMode.Size = new System.Drawing.Size(80, 27);
+            this.VideoNumActressMode.TabIndex = 8;
             // 
             // actressVideoLabel
             // 
@@ -267,6 +267,15 @@
             this.actressVideoTreeView.ShowLines = false;
             this.actressVideoTreeView.Size = new System.Drawing.Size(222, 365);
             this.actressVideoTreeView.TabIndex = 3;
+            // 
+            // rankGroupBox
+            // 
+            this.rankGroupBox.Location = new System.Drawing.Point(234, 37);
+            this.rankGroupBox.Name = "rankGroupBox";
+            this.rankGroupBox.Size = new System.Drawing.Size(114, 375);
+            this.rankGroupBox.TabIndex = 17;
+            this.rankGroupBox.TabStop = false;
+            this.rankGroupBox.Text = "Rank";
             // 
             // videoModeTabPage
             // 
@@ -337,6 +346,15 @@
             this.fileSize.ReadOnly = true;
             this.fileSize.Size = new System.Drawing.Size(80, 27);
             this.fileSize.TabIndex = 7;
+            // 
+            // vidoFileLabel
+            // 
+            this.vidoFileLabel.AutoSize = true;
+            this.vidoFileLabel.Location = new System.Drawing.Point(354, 25);
+            this.vidoFileLabel.Name = "vidoFileLabel";
+            this.vidoFileLabel.Size = new System.Drawing.Size(73, 19);
+            this.vidoFileLabel.TabIndex = 6;
+            this.vidoFileLabel.Text = "Video File";
             // 
             // vidoListLabel
             // 
@@ -452,13 +470,22 @@
             this.sortActressToolStripMenuItem.Text = "Sort Actress";
             this.sortActressToolStripMenuItem.Click += new System.EventHandler(this.sortActressToolStripMenuItem_Click);
             // 
+            // genreGroupBox
+            // 
+            this.genreGroupBox.Location = new System.Drawing.Point(234, 37);
+            this.genreGroupBox.Name = "genreGroupBox";
+            this.genreGroupBox.Size = new System.Drawing.Size(114, 375);
+            this.genreGroupBox.TabIndex = 16;
+            this.genreGroupBox.TabStop = false;
+            this.genreGroupBox.Text = "Genre";
+            // 
             // avStudioTabPage
             // 
             this.avStudioTabPage.Controls.Add(this.studioDataGridView);
             this.avStudioTabPage.Location = new System.Drawing.Point(4, 28);
             this.avStudioTabPage.Name = "avStudioTabPage";
             this.avStudioTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.avStudioTabPage.Size = new System.Drawing.Size(529, 438);
+            this.avStudioTabPage.Size = new System.Drawing.Size(596, 438);
             this.avStudioTabPage.TabIndex = 1;
             this.avStudioTabPage.Text = "AV Sudio";
             this.avStudioTabPage.UseVisualStyleBackColor = true;
@@ -469,7 +496,7 @@
             this.studioDataGridView.Location = new System.Drawing.Point(3, 3);
             this.studioDataGridView.Name = "studioDataGridView";
             this.studioDataGridView.RowTemplate.Height = 24;
-            this.studioDataGridView.Size = new System.Drawing.Size(517, 426);
+            this.studioDataGridView.Size = new System.Drawing.Size(590, 426);
             this.studioDataGridView.TabIndex = 0;
             // 
             // avActressTabPage
@@ -478,7 +505,7 @@
             this.avActressTabPage.Location = new System.Drawing.Point(4, 28);
             this.avActressTabPage.Name = "avActressTabPage";
             this.avActressTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.avActressTabPage.Size = new System.Drawing.Size(529, 438);
+            this.avActressTabPage.Size = new System.Drawing.Size(596, 438);
             this.avActressTabPage.TabIndex = 2;
             this.avActressTabPage.Text = "AV Actress";
             this.avActressTabPage.UseVisualStyleBackColor = true;
@@ -490,7 +517,7 @@
             this.actressDataGridView.Name = "actressDataGridView";
             this.actressDataGridView.RowTemplate.Height = 24;
             this.actressDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.actressDataGridView.Size = new System.Drawing.Size(517, 426);
+            this.actressDataGridView.Size = new System.Drawing.Size(590, 426);
             this.actressDataGridView.TabIndex = 1;
             // 
             // avVideoTabPage
@@ -499,7 +526,7 @@
             this.avVideoTabPage.Location = new System.Drawing.Point(4, 28);
             this.avVideoTabPage.Name = "avVideoTabPage";
             this.avVideoTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.avVideoTabPage.Size = new System.Drawing.Size(529, 438);
+            this.avVideoTabPage.Size = new System.Drawing.Size(596, 438);
             this.avVideoTabPage.TabIndex = 6;
             this.avVideoTabPage.Text = "AV Video";
             this.avVideoTabPage.UseVisualStyleBackColor = true;
@@ -511,7 +538,7 @@
             this.videoDataGridView.Name = "videoDataGridView";
             this.videoDataGridView.RowTemplate.Height = 24;
             this.videoDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.videoDataGridView.Size = new System.Drawing.Size(517, 426);
+            this.videoDataGridView.Size = new System.Drawing.Size(590, 426);
             this.videoDataGridView.TabIndex = 2;
             // 
             // avGenreTabPage
@@ -522,14 +549,14 @@
             this.avGenreTabPage.Location = new System.Drawing.Point(4, 28);
             this.avGenreTabPage.Name = "avGenreTabPage";
             this.avGenreTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.avGenreTabPage.Size = new System.Drawing.Size(529, 438);
+            this.avGenreTabPage.Size = new System.Drawing.Size(596, 438);
             this.avGenreTabPage.TabIndex = 7;
             this.avGenreTabPage.Text = "AV Genre";
             this.avGenreTabPage.UseVisualStyleBackColor = true;
             // 
             // exportGenreButton
             // 
-            this.exportGenreButton.Location = new System.Drawing.Point(338, 371);
+            this.exportGenreButton.Location = new System.Drawing.Point(406, 379);
             this.exportGenreButton.Name = "exportGenreButton";
             this.exportGenreButton.Size = new System.Drawing.Size(168, 38);
             this.exportGenreButton.TabIndex = 15;
@@ -539,7 +566,7 @@
             // 
             // updateGenreButton
             // 
-            this.updateGenreButton.Location = new System.Drawing.Point(152, 369);
+            this.updateGenreButton.Location = new System.Drawing.Point(220, 379);
             this.updateGenreButton.Name = "updateGenreButton";
             this.updateGenreButton.Size = new System.Drawing.Size(171, 38);
             this.updateGenreButton.TabIndex = 16;
@@ -550,10 +577,10 @@
             // genreDataGridView
             // 
             this.genreDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.genreDataGridView.Location = new System.Drawing.Point(6, 3);
+            this.genreDataGridView.Location = new System.Drawing.Point(3, 3);
             this.genreDataGridView.Name = "genreDataGridView";
             this.genreDataGridView.RowTemplate.Height = 24;
-            this.genreDataGridView.Size = new System.Drawing.Size(517, 426);
+            this.genreDataGridView.Size = new System.Drawing.Size(590, 426);
             this.genreDataGridView.TabIndex = 3;
             // 
             // rootDriveGroupBox
@@ -563,7 +590,7 @@
             this.rootDriveGroupBox.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rootDriveGroupBox.Location = new System.Drawing.Point(12, 27);
             this.rootDriveGroupBox.Name = "rootDriveGroupBox";
-            this.rootDriveGroupBox.Size = new System.Drawing.Size(533, 71);
+            this.rootDriveGroupBox.Size = new System.Drawing.Size(604, 71);
             this.rootDriveGroupBox.TabIndex = 11;
             this.rootDriveGroupBox.TabStop = false;
             this.rootDriveGroupBox.Text = "Root Drive";
@@ -571,7 +598,7 @@
             // rootDriveButton
             // 
             this.rootDriveButton.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rootDriveButton.Location = new System.Drawing.Point(414, 25);
+            this.rootDriveButton.Location = new System.Drawing.Point(490, 25);
             this.rootDriveButton.Name = "rootDriveButton";
             this.rootDriveButton.Size = new System.Drawing.Size(107, 27);
             this.rootDriveButton.TabIndex = 2;
@@ -583,7 +610,7 @@
             this.rootDriveTextBox.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rootDriveTextBox.Location = new System.Drawing.Point(6, 26);
             this.rootDriveTextBox.Name = "rootDriveTextBox";
-            this.rootDriveTextBox.Size = new System.Drawing.Size(370, 27);
+            this.rootDriveTextBox.Size = new System.Drawing.Size(475, 27);
             this.rootDriveTextBox.TabIndex = 3;
             // 
             // avMenuStrip
@@ -687,33 +714,6 @@
             this.thumbnailBrowser.Size = new System.Drawing.Size(838, 541);
             this.thumbnailBrowser.TabIndex = 17;
             this.thumbnailBrowser.MouseHover += new System.EventHandler(this.thumbnailBrowser_MouseHover);
-            // 
-            // vidoFileLabel
-            // 
-            this.vidoFileLabel.AutoSize = true;
-            this.vidoFileLabel.Location = new System.Drawing.Point(354, 25);
-            this.vidoFileLabel.Name = "vidoFileLabel";
-            this.vidoFileLabel.Size = new System.Drawing.Size(73, 19);
-            this.vidoFileLabel.TabIndex = 6;
-            this.vidoFileLabel.Text = "Video File";
-            // 
-            // genreGroupBox
-            // 
-            this.genreGroupBox.Location = new System.Drawing.Point(234, 37);
-            this.genreGroupBox.Name = "genreGroupBox";
-            this.genreGroupBox.Size = new System.Drawing.Size(114, 375);
-            this.genreGroupBox.TabIndex = 16;
-            this.genreGroupBox.TabStop = false;
-            this.genreGroupBox.Text = "Genre";
-            // 
-            // rankGroupBox
-            // 
-            this.rankGroupBox.Location = new System.Drawing.Point(234, 37);
-            this.rankGroupBox.Name = "rankGroupBox";
-            this.rankGroupBox.Size = new System.Drawing.Size(114, 375);
-            this.rankGroupBox.TabIndex = 17;
-            this.rankGroupBox.TabStop = false;
-            this.rankGroupBox.Text = "Rank";
             // 
             // AV_Assistant
             // 
