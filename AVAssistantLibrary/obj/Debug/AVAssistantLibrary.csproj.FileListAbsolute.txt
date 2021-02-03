@@ -2,4 +2,3 @@ E:\AV Assistant\AVAssistantLibrary\bin\Debug\AVAssistantLibrary.dll
 E:\AV Assistant\AVAssistantLibrary\bin\Debug\AVAssistantLibrary.pdb
 E:\AV Assistant\AVAssistantLibrary\obj\Debug\AVAssistantLibrary.dll
 E:\AV Assistant\AVAssistantLibrary\obj\Debug\AVAssistantLibrary.pdb
-E:\AV Assistant\AVAssistantLibrary\obj\Debug\AVAssistantLibrary.csprojResolveAssemblyReference.cache

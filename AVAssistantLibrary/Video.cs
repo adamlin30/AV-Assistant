@@ -13,7 +13,7 @@ namespace AVAssistantLibrary
     public class Video
     {
         public string[] drives { get; set; }
-        public string sortBy = null;
+        public string sortBy = "Creation Time DESC";
         FileUtility fileUtility = new FileUtility();
 
         public void ListVideo(ListBox lb, DataGridView dgv, TextBox tb)
@@ -72,11 +72,6 @@ namespace AVAssistantLibrary
             {
                 dgv.Columns[i].Width = 65;
             }
-
-            /*for (int i = 0; i < dgv.Rows.Count; i++)
-            {
-                dgv.Rows[i].HeaderCell.Value = "abc";
-            }*/
         }
 
     }

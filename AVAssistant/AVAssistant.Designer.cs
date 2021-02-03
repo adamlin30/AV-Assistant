@@ -122,6 +122,7 @@
             this.avTabControl.Controls.Add(this.avVideoTabPage);
             this.avTabControl.Controls.Add(this.avGenreTabPage);
             this.avTabControl.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.avTabControl.ImageList = this.tabImageList;
             this.avTabControl.ItemSize = new System.Drawing.Size(120, 24);
             this.avTabControl.Location = new System.Drawing.Point(12, 104);
             this.avTabControl.Name = "avTabControl";
@@ -640,7 +641,7 @@
             this.avStudiocsvToolStripMenuItem,
             this.avVideocsvToolStripMenuItem});
             this.openActresscsvToolStripMenuItem.Name = "openActresscsvToolStripMenuItem";
-            this.openActresscsvToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.openActresscsvToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openActresscsvToolStripMenuItem.Text = "Open";
             // 
             // avActresscsvToolStripMenuItem
@@ -673,14 +674,14 @@
             // genreToolStripMenuItem
             // 
             this.genreToolStripMenuItem.Name = "genreToolStripMenuItem";
-            this.genreToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.genreToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.genreToolStripMenuItem.Text = "Genre.csv";
             this.genreToolStripMenuItem.Click += new System.EventHandler(this.genreToolStripMenuItem_Click);
             // 
             // reloadToolStripMenuItem
             // 
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.reloadToolStripMenuItem.Text = "Reload";
             // 
             // exitToolStripMenuItem
@@ -725,8 +726,11 @@
             this.Controls.Add(this.avTabControl);
             this.Controls.Add(this.coverPictureBox);
             this.Controls.Add(this.thumbnailBrowser);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.avMenuStrip;
+            this.MaximizeBox = false;
             this.Name = "AV_Assistant";
-            this.Text = "AV";
+            this.Text = "AV Assistant";
             this.avTabControl.ResumeLayout(false);
             this.downloadTabPage.ResumeLayout(false);
             this.dowloadGroupBox.ResumeLayout(false);

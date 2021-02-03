@@ -26,6 +26,7 @@ namespace AVAssistantLibrary
 
             dtActressInFile = fileUtility.ReadCSV(@"E:\temp\AV_Actress_C.csv");
             //read csv file, source 1: CSV
+            dgv.DataSource = dtActressInFile; //update actressDataGridView
 
             for (int i = 0; i < dtActressInFile.Rows.Count; i++)
             {

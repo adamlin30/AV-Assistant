@@ -17,7 +17,7 @@ namespace AVAssistant
     public partial class AV_Assistant : Form
     {
         public string videoFolder = null;
-        public string[] drives = { @"E:\", @"D:\", @"C:\", @"F:\", @"H:\" };
+        public string[] drives = { @"C:\", @"D:\", @"E:\", @"F:\", @"H:\" };
         FileUtility fileUtility = new FileUtility();
         FolderUtility folderUtility = new FolderUtility();
         Video video = new Video();
@@ -32,69 +32,31 @@ namespace AVAssistant
             //coverPictureBox.Location = new Point(664, 27);
 
             fileUtility.DownloadCover(this.wgetLinks, this.studioDataGridView);
-            actressDataGridView.DataSource = fileUtility.ReadCSV(@"E:\temp\AV_Actress_C.csv"); //read csv file
 
             video.drives = drives;
             actress.drives = drives;
             actress.ListActress(this.actressListBox, this.actressDataGridView);
             video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFile);
-            //fileUtility.ShowThumbnail(this.thumbnailBrowser);
             video.ListGenre(genreDataGridView);
         }
 
-        private void videoListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void avTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            videoFileTreeView.Nodes.Clear();
-            coverPictureBox.Image = null;
-
-            videoFolder = Path.Combine(fileUtility.SearchVideoDrive(this.videoDataGridView, videoListBox.Text));
-
-            DirectoryInfo di = new DirectoryInfo(videoFolder);
-            FileInfo[] subFiles = di.GetFiles();
-
-            foreach (FileInfo s in subFiles)
+            if (avTabControl.SelectedIndex == 1)
             {
-                TreeNode root = new TreeNode(s.Name);
-                if (s.Name.Contains(@".jpg"))
-                {
-                    fileUtility.ShowImage(this.coverPictureBox, s.FullName);  //shows AV cover if jpg exists 
-                }
+                thumbnailBrowser.Show();
+                coverPictureBox.Hide();
+            }
 
-                string fileType = @"*.avi; *.mkv; *.mp4; *.mpg; *.wmv; *.iso";
-                if (fileType.Contains(Path.GetExtension(s.Name)))
-                {
-                    fileUtility.GetFileSize(this.fileSize, s.FullName);
-
-                }
-                videoFileTreeView.Nodes.Add(root);
+            if (avTabControl.SelectedIndex == 2)
+            {
+                thumbnailBrowser.Hide();
+                coverPictureBox.Show();
+                //coverPictureBox.Location = new Point(564, 27);
             }
         }
 
-        private void videoListBox_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            fileUtility.CallExecutable(@"C:\Windows\explorer.exe", videoFolder); //open video folder
-        }
-
-        private void videoListBox_MouseDown(object sender, MouseEventArgs e)
-        {
-            videoListBox.SelectedIndex = videoListBox.IndexFromPoint(e.X, e.Y); //mouse right-click
-        }
-
-        private void videoFileTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            fileUtility.GetFileSize(this.fileSize, Path.Combine(videoFolder, e.Node.FullPath));
-        }
-
-        private void videoFileTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            string fileType = @"*.avi; *.mkv; *.mp4; *.mpg; *.wmv";
-
-            if (fileType.Contains(Path.GetExtension(e.Node.Text)))
-            {
-                fileUtility.CallExecutable(@"PotPlayerMini64.exe", Path.Combine(videoFolder, e.Node.FullPath));
-            }
-        }
-
+        //*****Actress Mode*****//
         private void actressListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             actressVideoTreeView.Nodes.Clear();
@@ -137,22 +99,6 @@ namespace AVAssistant
                 fileUtility.ShowImage(this.coverPictureBox, Path.ChangeExtension(subFiles[0].FullName, ".jpg"));
             }*/
 
-        }
-
-        private void avTabControl_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (avTabControl.SelectedIndex == 1)
-            {
-                thumbnailBrowser.Show();
-                coverPictureBox.Hide();
-            }
-
-            if (avTabControl.SelectedIndex == 2)
-            {
-                thumbnailBrowser.Hide();
-                coverPictureBox.Show();
-                //coverPictureBox.Location = new Point(564, 27);
-            }
         }
 
         private void rankCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -208,11 +154,108 @@ namespace AVAssistant
             }));
         }
 
-        private void thumbnailBrowser_MouseHover(object sender, EventArgs e)
+        //*****Video Mode*****//
+        private void videoListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            thumbnailBrowser.Focus(); //enable mouse wheel
+            videoFileTreeView.Nodes.Clear();
+            coverPictureBox.Image = null;
+
+            videoFolder = Path.Combine(fileUtility.SearchVideoDrive(this.videoDataGridView, videoListBox.Text));
+
+            DirectoryInfo di = new DirectoryInfo(videoFolder);
+            FileInfo[] subFiles = di.GetFiles();
+
+            foreach (FileInfo s in subFiles)
+            {
+                TreeNode root = new TreeNode(s.Name);
+                if (s.Name.Contains(@".jpg"))
+                {
+                    fileUtility.ShowImage(this.coverPictureBox, s.FullName);  //shows AV cover if jpg exists 
+                }
+
+                string fileType = @"*.avi; *.mkv; *.mp4; *.mpg; *.wmv; *.iso";
+                if (fileType.Contains(Path.GetExtension(s.Name)))
+                {
+                    fileUtility.GetFileSize(this.fileSize, s.FullName);
+
+                }
+                videoFileTreeView.Nodes.Add(root);
+            }
         }
 
+        private void videoListBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            fileUtility.CallExecutable(@"C:\Windows\explorer.exe", videoFolder); //open video folder
+        }
+
+        private void videoListBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            videoListBox.SelectedIndex = videoListBox.IndexFromPoint(e.X, e.Y); //mouse right-click
+        }
+
+        private void videoFileTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            fileUtility.GetFileSize(this.fileSize, Path.Combine(videoFolder, e.Node.FullPath));
+        }
+
+        private void videoFileTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            string fileType = @"*.avi; *.mkv; *.mp4; *.mpg; *.wmv";
+
+            if (fileType.Contains(Path.GetExtension(e.Node.Text)))
+            {
+                fileUtility.CallExecutable(@"PotPlayerMini64.exe", Path.Combine(videoFolder, e.Node.FullPath));
+            }
+        }
+
+        private void genreCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            coverPictureBox.Image = null;
+            videoListBox.Items.Clear();
+            videoFileTreeView.Nodes.Clear();
+            List<string> gnereSelected = new List<string>();
+
+            //https://stackoverflow.com/questions/32291324/manage-checkedlistbox-itemcheck-event-to-run-after-an-item-checked-not-before
+            this.BeginInvoke(new Action(() =>
+            {
+                for (int i = 0; i <= (genreCheckedListBox.Items.Count - 1); i++)
+                {
+                    if (genreCheckedListBox.GetItemChecked(i))
+                    {
+                        gnereSelected.Add(i.ToString()); //check ranking selected
+                    }
+                }
+
+                string[] genreSelectedArr = gnereSelected.ToArray();
+                int numOfGenreSelected = genreSelectedArr.Count();
+                int sum = 0;
+                int counter = 0;
+
+                for (int i = 0; i < genreDataGridView.Rows.Count - 1; i++) //skip the last row
+                {
+                    sum = 0;
+                    for (int j = 0; j < numOfGenreSelected; j++)
+                    {
+                        int columnVal = int.Parse(genreSelectedArr[j]); //0:bondage 1:classic etc.
+                        sum = sum + int.Parse(genreDataGridView.Rows[i].Cells[columnVal + 1].Value.ToString());
+                    }
+
+                    if (numOfGenreSelected == sum)
+                    {
+                        videoListBox.Items.Add(genreDataGridView.Rows[i].Cells[0].Value.ToString());
+                        counter++;
+                    }
+                    numOfFile.Text = counter.ToString();
+                }
+
+                if (genreCheckedListBox.CheckedItems.Count == 0)
+                {
+                    video.ListVideo(this.videoListBox, this.actressDataGridView, this.numOfFile);
+                }
+            }));
+        }
+
+        //*****Mouse Menu*****//
         private void nameAscendingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             video.sortBy = "Video ASC";
@@ -277,6 +320,30 @@ namespace AVAssistant
             ));
 
             avTabControl.SelectedIndex = 1;
+        }
+
+        //*****Menu*****//
+        private void genreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //dynamically generate a new form as Genre Editor
+            Form genreForm = new Form();
+            genreForm.MinimizeBox = false;
+            genreForm.MaximizeBox = false;
+            genreForm.Text = "Genre Editor";
+            genreForm.Height = 620;
+            genreForm.Width = 940;
+            //genreForm.TopMost = true;
+            genreForm.Show();
+            genreForm.Controls.Add(genreDataGridView);
+            genreForm.Controls.Add(updateGenreButton);
+            genreForm.Controls.Add(exportGenreButton);
+
+            genreDataGridView.Size = new Size(910, 498);
+            genreDataGridView.Location = new Point(0, 0);
+            updateGenreButton.Location = new Point(0, 500);
+            exportGenreButton.Location = new Point(500, 500);
+
+            genreForm.FormClosing += genreForm_FormClosing; //detect x button event
         }
 
         private void exportGenreButton_Click(object sender, EventArgs e)
@@ -349,82 +416,18 @@ namespace AVAssistant
                           + "Total Records            : " + genreDataGridView.Rows.Count);
         }
 
-        private void genreCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            coverPictureBox.Image = null;
-            videoListBox.Items.Clear();
-            videoFileTreeView.Nodes.Clear();
-            List<string> gnereSelected = new List<string>();
-
-            //https://stackoverflow.com/questions/32291324/manage-checkedlistbox-itemcheck-event-to-run-after-an-item-checked-not-before
-            this.BeginInvoke(new Action(() =>
-            {
-                for (int i = 0; i <= (genreCheckedListBox.Items.Count - 1); i++)
-                {
-                    if (genreCheckedListBox.GetItemChecked(i))
-                    {
-                        gnereSelected.Add(i.ToString()); //check ranking selected
-                    }
-                }
-
-                string[] genreSelectedArr = gnereSelected.ToArray();
-                int numOfGenreSelected = genreSelectedArr.Count();
-                int sum = 0;
-                int counter = 0;
-
-                for (int i = 0; i < genreDataGridView.Rows.Count - 1; i++) //skip the last row
-                {
-                    sum = 0;
-                    for (int j = 0; j < numOfGenreSelected; j++)
-                    {
-                        int columnVal = int.Parse(genreSelectedArr[j]); //0:bondage 1:classic etc.
-                        sum = sum + int.Parse(genreDataGridView.Rows[i].Cells[columnVal + 1].Value.ToString());
-                    }
-
-                    if (numOfGenreSelected == sum)
-                    {
-                        videoListBox.Items.Add(genreDataGridView.Rows[i].Cells[0].Value.ToString());
-                        counter++;
-                    }
-                    numOfFile.Text = counter.ToString();
-                }
-
-                if (genreCheckedListBox.CheckedItems.Count == 0)
-                {
-                    video.ListVideo(this.videoListBox, this.actressDataGridView, this.numOfFile);
-                }
-            }));
-        }
-
-        private void genreToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //dynamically generate a new form as Genre Editor
-            Form genreForm = new Form();
-            genreForm.MinimizeBox = false;
-            genreForm.MaximizeBox = false;
-            genreForm.Text = "Genre Editor";
-            genreForm.Height = 620;
-            genreForm.Width = 940;
-            //genreForm.TopMost = true;
-            genreForm.Show();
-            genreForm.Controls.Add(genreDataGridView);
-            genreForm.Controls.Add(updateGenreButton);
-            genreForm.Controls.Add(exportGenreButton);
-
-            genreDataGridView.Size = new Size(910, 498);
-            genreDataGridView.Location = new Point(0, 0);
-            updateGenreButton.Location = new Point(0, 500);
-            exportGenreButton.Location = new Point(500, 500);
-
-            genreForm.FormClosing += genreForm_FormClosing; //detect x button event
-        }
-
         private void genreForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Form f = sender as Form;
             Form f = (Form)sender;
             e.Cancel = true; //http://www.frogjumpjump.com/2018/12/windows-form.html
             f.Hide(); //hide new form
+        }
+
+        //*****Picture*****//
+        private void thumbnailBrowser_MouseHover(object sender, EventArgs e)
+        {
+            thumbnailBrowser.Focus(); //enable mouse wheel
         }
     }
 }

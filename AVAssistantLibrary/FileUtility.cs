@@ -245,23 +245,15 @@ namespace AVAssistantLibrary
 
             new Cursor(Cursor.Current.Handle);
 
-            //resolution 1920x1080
-            if (Cursor.Position.X + 800 > 1920 || Cursor.Position.X - 800 < 0)
+            if (Cursor.Position.X + 800 < 1920 && Cursor.Position.Y + 538 < 1080) //picture inside the screen?
             {
-                f.Location = new Point(Cursor.Position.X - 800, Cursor.Position.Y);
+                f.Location = new Point(Cursor.Position.X + 10, Cursor.Position.Y + 10);
             }
-            if (Cursor.Position.Y + 537 > 900 || Cursor.Position.Y - 537 < 50)
+            else
             {
-                f.Location = new Point(Cursor.Position.X, Cursor.Position.Y - 537);
+                f.Location = new Point(0, 0);
             }
-            if (Cursor.Position.X + 800 > 1920 && Cursor.Position.Y + 537 > 900)
-            {
-                f.Location = new Point(Cursor.Position.X - 800, Cursor.Position.Y - 537);
-            }
-            if (Cursor.Position.X + 800 < 1920 && Cursor.Position.Y + 537 < 900)
-            {
-                f.Location = new Point(Cursor.Position.X + 20, Cursor.Position.Y + 20);
-            }
+
             f.Controls.Add(img);
             f.Show();
         }
