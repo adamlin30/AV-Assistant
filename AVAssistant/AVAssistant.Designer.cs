@@ -87,10 +87,12 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.genreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.alwaysOnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.coverPictureBox = new System.Windows.Forms.PictureBox();
             this.thumbnailBrowser = new System.Windows.Forms.FlowLayoutPanel();
-            this.alwaysOnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.videoFilterTextBox = new System.Windows.Forms.TextBox();
+            this.videoFilterLabel = new System.Windows.Forms.Label();
             this.avTabControl.SuspendLayout();
             this.infoTabPage.SuspendLayout();
             this.infoGroupBox.SuspendLayout();
@@ -99,6 +101,7 @@
             this.videoModeTabPage.SuspendLayout();
             this.videoModeGroupBox.SuspendLayout();
             this.videoListContextMenuStrip.SuspendLayout();
+            this.genreGroupBox.SuspendLayout();
             this.avStudioTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.studioDataGridView)).BeginInit();
             this.avActressTabPage.SuspendLayout();
@@ -464,6 +467,8 @@
             // 
             // genreGroupBox
             // 
+            this.genreGroupBox.Controls.Add(this.videoFilterLabel);
+            this.genreGroupBox.Controls.Add(this.videoFilterTextBox);
             this.genreGroupBox.Location = new System.Drawing.Point(234, 37);
             this.genreGroupBox.Name = "genreGroupBox";
             this.genreGroupBox.Size = new System.Drawing.Size(114, 375);
@@ -689,6 +694,13 @@
             this.reloadToolStripMenuItem.Text = "Reload";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
             // 
+            // alwaysOnTopToolStripMenuItem
+            // 
+            this.alwaysOnTopToolStripMenuItem.Name = "alwaysOnTopToolStripMenuItem";
+            this.alwaysOnTopToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.alwaysOnTopToolStripMenuItem.Text = "Always on Top";
+            this.alwaysOnTopToolStripMenuItem.Click += new System.EventHandler(this.alwaysOnTopToolStripMenuItem_Click);
+            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
@@ -713,12 +725,23 @@
             this.thumbnailBrowser.TabIndex = 17;
             this.thumbnailBrowser.MouseHover += new System.EventHandler(this.thumbnailBrowser_MouseHover);
             // 
-            // alwaysOnTopToolStripMenuItem
+            // videoFilterTextBox
             // 
-            this.alwaysOnTopToolStripMenuItem.Name = "alwaysOnTopToolStripMenuItem";
-            this.alwaysOnTopToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.alwaysOnTopToolStripMenuItem.Text = "Always on Top";
-            this.alwaysOnTopToolStripMenuItem.Click += new System.EventHandler(this.alwaysOnTopToolStripMenuItem_Click);
+            this.videoFilterTextBox.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.videoFilterTextBox.Location = new System.Drawing.Point(6, 277);
+            this.videoFilterTextBox.Name = "videoFilterTextBox";
+            this.videoFilterTextBox.Size = new System.Drawing.Size(102, 27);
+            this.videoFilterTextBox.TabIndex = 4;
+            this.videoFilterTextBox.TextChanged += new System.EventHandler(this.videoFilterTextBox_TextChanged);
+            // 
+            // videoFilterLabel
+            // 
+            this.videoFilterLabel.AutoSize = true;
+            this.videoFilterLabel.Location = new System.Drawing.Point(6, 255);
+            this.videoFilterLabel.Name = "videoFilterLabel";
+            this.videoFilterLabel.Size = new System.Drawing.Size(83, 19);
+            this.videoFilterLabel.TabIndex = 18;
+            this.videoFilterLabel.Text = "Video Filter";
             // 
             // avAssistantForm
             // 
@@ -746,6 +769,8 @@
             this.videoModeGroupBox.ResumeLayout(false);
             this.videoModeGroupBox.PerformLayout();
             this.videoListContextMenuStrip.ResumeLayout(false);
+            this.genreGroupBox.ResumeLayout(false);
+            this.genreGroupBox.PerformLayout();
             this.avStudioTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.studioDataGridView)).EndInit();
             this.avActressTabPage.ResumeLayout(false);
@@ -827,6 +852,8 @@
         private System.Windows.Forms.GroupBox genreGroupBox;
         private System.Windows.Forms.GroupBox rankGroupBox;
         private System.Windows.Forms.ToolStripMenuItem alwaysOnTopToolStripMenuItem;
+        private System.Windows.Forms.TextBox videoFilterTextBox;
+        private System.Windows.Forms.Label videoFilterLabel;
     }
 }
 

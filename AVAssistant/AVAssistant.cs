@@ -456,5 +456,28 @@ namespace AVAssistant
             thumbnailBrowser.Focus(); //enable mouse wheel
         }
 
+        private void videoFilterTextBox_TextChanged(object sender, EventArgs e)
+        {
+            videoListBox.Items.Clear();
+            if (string.IsNullOrEmpty(videoFilterTextBox.Text) == false)
+            {
+                foreach (string s in video.videoListBoxItems)
+                {
+                    if (s.ToLower().Contains(videoFilterTextBox.Text))
+                    {
+                        videoListBox.Items.Add(s);
+                    }
+                }
+                numOfFileTextBox.Text = videoListBox.Items.Count.ToString();
+            }
+            else if (videoFilterTextBox.Text == "")
+            {
+                foreach (string s in video.videoListBoxItems)
+                {
+                    videoListBox.Items.Add(s);
+                }
+                numOfFileTextBox.Text = videoListBox.Items.Count.ToString();
+            }
+        }
     }
 }

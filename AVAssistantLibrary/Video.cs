@@ -15,6 +15,7 @@ namespace AVAssistantLibrary
         public string[] drives { get; set; }
         public string sortBy = "Creation Time DESC";
         FileUtility fileUtility = new FileUtility();
+        public List<string> videoListBoxItems = new List<string>();
 
         public void ListVideo(ListBox lb, DataGridView dgv, TextBox tb)
         {
@@ -56,6 +57,8 @@ namespace AVAssistantLibrary
             {
                 lb.Items.Add(dtVideo.Rows[i]["Video"].ToString()); //insert video to listbox
             }
+
+            videoListBoxItems = lb.Items.Cast<String>().ToList(); //https://stackoverflow.com/questions/1565504/most-succinct-way-to-convert-listbox-items-to-a-generic-list
 
             tb.Text = dtVideo.Rows.Count.ToString();
         }
