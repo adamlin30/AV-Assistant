@@ -1,6 +1,6 @@
 ﻿namespace AVAssistant
 {
-    partial class AV_Assistant
+    partial class avAssistantForm
     {
         /// <summary>
         /// 設計工具所需的變數。
@@ -29,12 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AV_Assistant));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(avAssistantForm));
             this.avTabControl = new System.Windows.Forms.TabControl();
-            this.downloadTabPage = new System.Windows.Forms.TabPage();
-            this.dowloadGroupBox = new System.Windows.Forms.GroupBox();
-            this.wgetLinks = new System.Windows.Forms.TextBox();
-            this.infoTextBox = new System.Windows.Forms.TextBox();
+            this.infoTabPage = new System.Windows.Forms.TabPage();
+            this.infoGroupBox = new System.Windows.Forms.GroupBox();
+            this.coverLinkTextBox = new System.Windows.Forms.TextBox();
             this.actressModeTabPage = new System.Windows.Forms.TabPage();
             this.actressModeGroupBox = new System.Windows.Forms.GroupBox();
             this.rankCheckedListBox = new System.Windows.Forms.CheckedListBox();
@@ -47,8 +46,8 @@
             this.videoModeTabPage = new System.Windows.Forms.TabPage();
             this.videoModeGroupBox = new System.Windows.Forms.GroupBox();
             this.genreCheckedListBox = new System.Windows.Forms.CheckedListBox();
-            this.numOfFile = new System.Windows.Forms.TextBox();
-            this.fileSize = new System.Windows.Forms.TextBox();
+            this.numOfFileTextBox = new System.Windows.Forms.TextBox();
+            this.fileSizeTextBox = new System.Windows.Forms.TextBox();
             this.vidoFileLabel = new System.Windows.Forms.Label();
             this.vidoListLabel = new System.Windows.Forms.Label();
             this.videoFileTreeView = new System.Windows.Forms.TreeView();
@@ -75,6 +74,7 @@
             this.exportGenreButton = new System.Windows.Forms.Button();
             this.updateGenreButton = new System.Windows.Forms.Button();
             this.genreDataGridView = new System.Windows.Forms.DataGridView();
+            this.tabImageList = new System.Windows.Forms.ImageList(this.components);
             this.rootDriveGroupBox = new System.Windows.Forms.GroupBox();
             this.rootDriveButton = new System.Windows.Forms.Button();
             this.rootDriveTextBox = new System.Windows.Forms.TextBox();
@@ -88,12 +88,12 @@
             this.genreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabImageList = new System.Windows.Forms.ImageList(this.components);
             this.coverPictureBox = new System.Windows.Forms.PictureBox();
             this.thumbnailBrowser = new System.Windows.Forms.FlowLayoutPanel();
+            this.alwaysOnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.avTabControl.SuspendLayout();
-            this.downloadTabPage.SuspendLayout();
-            this.dowloadGroupBox.SuspendLayout();
+            this.infoTabPage.SuspendLayout();
+            this.infoGroupBox.SuspendLayout();
             this.actressModeTabPage.SuspendLayout();
             this.actressModeGroupBox.SuspendLayout();
             this.videoModeTabPage.SuspendLayout();
@@ -114,7 +114,7 @@
             // 
             // avTabControl
             // 
-            this.avTabControl.Controls.Add(this.downloadTabPage);
+            this.avTabControl.Controls.Add(this.infoTabPage);
             this.avTabControl.Controls.Add(this.actressModeTabPage);
             this.avTabControl.Controls.Add(this.videoModeTabPage);
             this.avTabControl.Controls.Add(this.avStudioTabPage);
@@ -132,47 +132,38 @@
             this.avTabControl.TabIndex = 10;
             this.avTabControl.SelectedIndexChanged += new System.EventHandler(this.avTabControl_SelectedIndexChanged);
             // 
-            // downloadTabPage
+            // infoTabPage
             // 
-            this.downloadTabPage.Controls.Add(this.dowloadGroupBox);
-            this.downloadTabPage.ImageIndex = 0;
-            this.downloadTabPage.Location = new System.Drawing.Point(4, 28);
-            this.downloadTabPage.Name = "downloadTabPage";
-            this.downloadTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.downloadTabPage.Size = new System.Drawing.Size(596, 438);
-            this.downloadTabPage.TabIndex = 0;
-            this.downloadTabPage.Text = "Download";
-            this.downloadTabPage.UseVisualStyleBackColor = true;
+            this.infoTabPage.Controls.Add(this.infoGroupBox);
+            this.infoTabPage.ImageIndex = 0;
+            this.infoTabPage.Location = new System.Drawing.Point(4, 28);
+            this.infoTabPage.Name = "infoTabPage";
+            this.infoTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.infoTabPage.Size = new System.Drawing.Size(596, 438);
+            this.infoTabPage.TabIndex = 0;
+            this.infoTabPage.Text = "Info";
+            this.infoTabPage.UseVisualStyleBackColor = true;
             // 
-            // dowloadGroupBox
+            // infoGroupBox
             // 
-            this.dowloadGroupBox.Controls.Add(this.wgetLinks);
-            this.dowloadGroupBox.Controls.Add(this.infoTextBox);
-            this.dowloadGroupBox.Cursor = System.Windows.Forms.Cursors.Default;
-            this.dowloadGroupBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.dowloadGroupBox.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dowloadGroupBox.Location = new System.Drawing.Point(6, 6);
-            this.dowloadGroupBox.Name = "dowloadGroupBox";
-            this.dowloadGroupBox.Size = new System.Drawing.Size(584, 426);
-            this.dowloadGroupBox.TabIndex = 2;
-            this.dowloadGroupBox.TabStop = false;
-            this.dowloadGroupBox.Text = "Setting";
+            this.infoGroupBox.Controls.Add(this.coverLinkTextBox);
+            this.infoGroupBox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.infoGroupBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.infoGroupBox.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.infoGroupBox.Location = new System.Drawing.Point(6, 6);
+            this.infoGroupBox.Name = "infoGroupBox";
+            this.infoGroupBox.Size = new System.Drawing.Size(584, 426);
+            this.infoGroupBox.TabIndex = 2;
+            this.infoGroupBox.TabStop = false;
+            this.infoGroupBox.Text = "Setting";
             // 
-            // wgetLinks
+            // coverLinkTextBox
             // 
-            this.wgetLinks.Location = new System.Drawing.Point(6, 193);
-            this.wgetLinks.Multiline = true;
-            this.wgetLinks.Name = "wgetLinks";
-            this.wgetLinks.Size = new System.Drawing.Size(572, 227);
-            this.wgetLinks.TabIndex = 1;
-            // 
-            // infoTextBox
-            // 
-            this.infoTextBox.Location = new System.Drawing.Point(6, 26);
-            this.infoTextBox.Multiline = true;
-            this.infoTextBox.Name = "infoTextBox";
-            this.infoTextBox.Size = new System.Drawing.Size(572, 161);
-            this.infoTextBox.TabIndex = 0;
+            this.coverLinkTextBox.Location = new System.Drawing.Point(6, 26);
+            this.coverLinkTextBox.Multiline = true;
+            this.coverLinkTextBox.Name = "coverLinkTextBox";
+            this.coverLinkTextBox.Size = new System.Drawing.Size(572, 394);
+            this.coverLinkTextBox.TabIndex = 1;
             // 
             // actressModeTabPage
             // 
@@ -293,8 +284,8 @@
             // videoModeGroupBox
             // 
             this.videoModeGroupBox.Controls.Add(this.genreCheckedListBox);
-            this.videoModeGroupBox.Controls.Add(this.numOfFile);
-            this.videoModeGroupBox.Controls.Add(this.fileSize);
+            this.videoModeGroupBox.Controls.Add(this.numOfFileTextBox);
+            this.videoModeGroupBox.Controls.Add(this.fileSizeTextBox);
             this.videoModeGroupBox.Controls.Add(this.vidoFileLabel);
             this.videoModeGroupBox.Controls.Add(this.vidoListLabel);
             this.videoModeGroupBox.Controls.Add(this.videoFileTreeView);
@@ -332,21 +323,21 @@
             this.genreCheckedListBox.TabIndex = 15;
             this.genreCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.genreCheckedListBox_ItemCheck);
             // 
-            // numOfFile
+            // numOfFileTextBox
             // 
-            this.numOfFile.Location = new System.Drawing.Point(148, 17);
-            this.numOfFile.Name = "numOfFile";
-            this.numOfFile.ReadOnly = true;
-            this.numOfFile.Size = new System.Drawing.Size(80, 27);
-            this.numOfFile.TabIndex = 7;
+            this.numOfFileTextBox.Location = new System.Drawing.Point(148, 17);
+            this.numOfFileTextBox.Name = "numOfFileTextBox";
+            this.numOfFileTextBox.ReadOnly = true;
+            this.numOfFileTextBox.Size = new System.Drawing.Size(80, 27);
+            this.numOfFileTextBox.TabIndex = 7;
             // 
-            // fileSize
+            // fileSizeTextBox
             // 
-            this.fileSize.Location = new System.Drawing.Point(498, 17);
-            this.fileSize.Name = "fileSize";
-            this.fileSize.ReadOnly = true;
-            this.fileSize.Size = new System.Drawing.Size(80, 27);
-            this.fileSize.TabIndex = 7;
+            this.fileSizeTextBox.Location = new System.Drawing.Point(498, 17);
+            this.fileSizeTextBox.Name = "fileSizeTextBox";
+            this.fileSizeTextBox.ReadOnly = true;
+            this.fileSizeTextBox.Size = new System.Drawing.Size(80, 27);
+            this.fileSizeTextBox.TabIndex = 7;
             // 
             // vidoFileLabel
             // 
@@ -584,6 +575,15 @@
             this.genreDataGridView.Size = new System.Drawing.Size(590, 426);
             this.genreDataGridView.TabIndex = 3;
             // 
+            // tabImageList
+            // 
+            this.tabImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("tabImageList.ImageStream")));
+            this.tabImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.tabImageList.Images.SetKeyName(0, "Automatic Download.png");
+            this.tabImageList.Images.SetKeyName(1, "Manual Download.png");
+            this.tabImageList.Images.SetKeyName(2, "Actress Mode.png");
+            this.tabImageList.Images.SetKeyName(3, "Video Mode.png");
+            // 
             // rootDriveGroupBox
             // 
             this.rootDriveGroupBox.Controls.Add(this.rootDriveButton);
@@ -641,7 +641,7 @@
             this.avStudiocsvToolStripMenuItem,
             this.avVideocsvToolStripMenuItem});
             this.openActresscsvToolStripMenuItem.Name = "openActresscsvToolStripMenuItem";
-            this.openActresscsvToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openActresscsvToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.openActresscsvToolStripMenuItem.Text = "Open";
             // 
             // avActresscsvToolStripMenuItem
@@ -649,12 +649,14 @@
             this.avActresscsvToolStripMenuItem.Name = "avActresscsvToolStripMenuItem";
             this.avActresscsvToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.avActresscsvToolStripMenuItem.Text = "AV_Actress.csv";
+            this.avActresscsvToolStripMenuItem.Click += new System.EventHandler(this.avActresscsvToolStripMenuItem_Click);
             // 
             // avStudiocsvToolStripMenuItem
             // 
             this.avStudiocsvToolStripMenuItem.Name = "avStudiocsvToolStripMenuItem";
             this.avStudiocsvToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.avStudiocsvToolStripMenuItem.Text = "AV_Studio.csv";
+            this.avStudiocsvToolStripMenuItem.Click += new System.EventHandler(this.avStudiocsvToolStripMenuItem_Click);
             // 
             // avVideocsvToolStripMenuItem
             // 
@@ -666,7 +668,8 @@
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.genreToolStripMenuItem,
-            this.reloadToolStripMenuItem});
+            this.reloadToolStripMenuItem,
+            this.alwaysOnTopToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
             this.optionsToolStripMenuItem.Text = "Edit";
@@ -674,30 +677,24 @@
             // genreToolStripMenuItem
             // 
             this.genreToolStripMenuItem.Name = "genreToolStripMenuItem";
-            this.genreToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.genreToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.genreToolStripMenuItem.Text = "Genre.csv";
             this.genreToolStripMenuItem.Click += new System.EventHandler(this.genreToolStripMenuItem_Click);
             // 
             // reloadToolStripMenuItem
             // 
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reloadToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.reloadToolStripMenuItem.Text = "Reload";
+            this.reloadToolStripMenuItem.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.exitToolStripMenuItem.Text = "Exit";
-            // 
-            // tabImageList
-            // 
-            this.tabImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("tabImageList.ImageStream")));
-            this.tabImageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.tabImageList.Images.SetKeyName(0, "Automatic Download.png");
-            this.tabImageList.Images.SetKeyName(1, "Manual Download.png");
-            this.tabImageList.Images.SetKeyName(2, "Actress Mode.png");
-            this.tabImageList.Images.SetKeyName(3, "Video Mode.png");
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // coverPictureBox
             // 
@@ -716,7 +713,14 @@
             this.thumbnailBrowser.TabIndex = 17;
             this.thumbnailBrowser.MouseHover += new System.EventHandler(this.thumbnailBrowser_MouseHover);
             // 
-            // AV_Assistant
+            // alwaysOnTopToolStripMenuItem
+            // 
+            this.alwaysOnTopToolStripMenuItem.Name = "alwaysOnTopToolStripMenuItem";
+            this.alwaysOnTopToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.alwaysOnTopToolStripMenuItem.Text = "Always on Top";
+            this.alwaysOnTopToolStripMenuItem.Click += new System.EventHandler(this.alwaysOnTopToolStripMenuItem_Click);
+            // 
+            // avAssistantForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -729,12 +733,12 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.avMenuStrip;
             this.MaximizeBox = false;
-            this.Name = "AV_Assistant";
+            this.Name = "avAssistantForm";
             this.Text = "AV Assistant";
             this.avTabControl.ResumeLayout(false);
-            this.downloadTabPage.ResumeLayout(false);
-            this.dowloadGroupBox.ResumeLayout(false);
-            this.dowloadGroupBox.PerformLayout();
+            this.infoTabPage.ResumeLayout(false);
+            this.infoGroupBox.ResumeLayout(false);
+            this.infoGroupBox.PerformLayout();
             this.actressModeTabPage.ResumeLayout(false);
             this.actressModeGroupBox.ResumeLayout(false);
             this.actressModeGroupBox.PerformLayout();
@@ -763,10 +767,9 @@
         #endregion
 
         private System.Windows.Forms.TabControl avTabControl;
-        private System.Windows.Forms.TabPage downloadTabPage;
-        private System.Windows.Forms.GroupBox dowloadGroupBox;
-        private System.Windows.Forms.TextBox wgetLinks;
-        private System.Windows.Forms.TextBox infoTextBox;
+        private System.Windows.Forms.TabPage infoTabPage;
+        private System.Windows.Forms.GroupBox infoGroupBox;
+        private System.Windows.Forms.TextBox coverLinkTextBox;
         private System.Windows.Forms.TabPage actressModeTabPage;
         private System.Windows.Forms.GroupBox actressModeGroupBox;
         public System.Windows.Forms.TextBox VideoNumActressMode;
@@ -777,8 +780,8 @@
         public System.Windows.Forms.TreeView actressVideoTreeView;
         private System.Windows.Forms.TabPage videoModeTabPage;
         private System.Windows.Forms.GroupBox videoModeGroupBox;
-        public System.Windows.Forms.TextBox numOfFile;
-        public System.Windows.Forms.TextBox fileSize;
+        public System.Windows.Forms.TextBox numOfFileTextBox;
+        public System.Windows.Forms.TextBox fileSizeTextBox;
         private System.Windows.Forms.Label vidoListLabel;
         public System.Windows.Forms.TreeView videoFileTreeView;
         public System.Windows.Forms.ListBox videoListBox;
@@ -823,6 +826,7 @@
         private System.Windows.Forms.Label vidoFileLabel;
         private System.Windows.Forms.GroupBox genreGroupBox;
         private System.Windows.Forms.GroupBox rankGroupBox;
+        private System.Windows.Forms.ToolStripMenuItem alwaysOnTopToolStripMenuItem;
     }
 }
 

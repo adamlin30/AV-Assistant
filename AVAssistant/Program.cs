@@ -16,7 +16,7 @@ namespace AVAssistant
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AV_Assistant());
+            Application.Run(new avAssistantForm());
         }
     }
 }

@@ -14,7 +14,7 @@ using System.Diagnostics;
 
 namespace AVAssistant
 {
-    public partial class AV_Assistant : Form
+    public partial class avAssistantForm : Form
     {
         public string videoFolder = null;
         public string[] drives = { @"C:\", @"D:\", @"E:\", @"F:\", @"H:\" };
@@ -23,7 +23,7 @@ namespace AVAssistant
         Video video = new Video();
         Actress actress = new Actress();
 
-        public AV_Assistant()
+        public avAssistantForm()
         {
             InitializeComponent();
             avTabControl.SelectedIndex = 2;
@@ -31,12 +31,12 @@ namespace AVAssistant
             coverPictureBox.Show();
             //coverPictureBox.Location = new Point(664, 27);
 
-            fileUtility.DownloadCover(this.wgetLinks, this.studioDataGridView);
+            fileUtility.DownloadCover(this.coverLinkTextBox, this.studioDataGridView);
 
             video.drives = drives;
             actress.drives = drives;
             actress.ListActress(this.actressListBox, this.actressDataGridView);
-            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFile);
+            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
             video.ListGenre(genreDataGridView);
         }
 
@@ -176,7 +176,7 @@ namespace AVAssistant
                 string fileType = @"*.avi; *.mkv; *.mp4; *.mpg; *.wmv; *.iso";
                 if (fileType.Contains(Path.GetExtension(s.Name)))
                 {
-                    fileUtility.GetFileSize(this.fileSize, s.FullName);
+                    fileUtility.GetFileSize(this.fileSizeTextBox, s.FullName);
 
                 }
                 videoFileTreeView.Nodes.Add(root);
@@ -195,7 +195,7 @@ namespace AVAssistant
 
         private void videoFileTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            fileUtility.GetFileSize(this.fileSize, Path.Combine(videoFolder, e.Node.FullPath));
+            fileUtility.GetFileSize(this.fileSizeTextBox, Path.Combine(videoFolder, e.Node.FullPath));
         }
 
         private void videoFileTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -245,12 +245,12 @@ namespace AVAssistant
                         videoListBox.Items.Add(genreDataGridView.Rows[i].Cells[0].Value.ToString());
                         counter++;
                     }
-                    numOfFile.Text = counter.ToString();
+                    numOfFileTextBox.Text = counter.ToString();
                 }
 
                 if (genreCheckedListBox.CheckedItems.Count == 0)
                 {
-                    video.ListVideo(this.videoListBox, this.actressDataGridView, this.numOfFile);
+                    video.ListVideo(this.videoListBox, this.actressDataGridView, this.numOfFileTextBox);
                 }
             }));
         }
@@ -259,25 +259,25 @@ namespace AVAssistant
         private void nameAscendingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             video.sortBy = "Video ASC";
-            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFile);
+            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
         }
 
         private void nameDescendingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             video.sortBy = "Video DESC";
-            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFile);
+            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
         }
 
         private void timeAscendingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             video.sortBy = "Creation Time ASC";
-            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFile);
+            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
         }
 
         private void timeDescendingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             video.sortBy = "Creation Time DESC";
-            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFile);
+            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
         }
 
         private void searchCoverToolStripMenuItem_Click(object sender, EventArgs e)
@@ -323,6 +323,16 @@ namespace AVAssistant
         }
 
         //*****Menu*****//
+        private void avActresscsvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fileUtility.CallExecutable(@"notepad++.exe", "E:\\temp\\AV_Actress_C.csv");
+        }
+
+        private void avStudiocsvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fileUtility.CallExecutable(@"notepad++.exe", "E:\\temp\\AV_Studio_C.csv");
+        }
+
         private void genreToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //dynamically generate a new form as Genre Editor
@@ -344,6 +354,22 @@ namespace AVAssistant
             exportGenreButton.Location = new Point(500, 500);
 
             genreForm.FormClosing += genreForm_FormClosing; //detect x button event
+        }
+
+        private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
+        }
+
+        private void alwaysOnTopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            alwaysOnTopToolStripMenuItem.Checked = !alwaysOnTopToolStripMenuItem.Checked;
+            this.TopMost = alwaysOnTopToolStripMenuItem.Checked;
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
 
         private void exportGenreButton_Click(object sender, EventArgs e)
@@ -424,10 +450,11 @@ namespace AVAssistant
             f.Hide(); //hide new form
         }
 
-        //*****Picture*****//
+        //*****Visualization*****//
         private void thumbnailBrowser_MouseHover(object sender, EventArgs e)
         {
             thumbnailBrowser.Focus(); //enable mouse wheel
         }
+
     }
 }

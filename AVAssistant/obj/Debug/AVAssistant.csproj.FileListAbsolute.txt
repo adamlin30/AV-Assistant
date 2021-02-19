@@ -4,8 +4,8 @@ E:\AV Assistant\AVAssistant\bin\Debug\AVAssistant.pdb
 E:\AV Assistant\AVAssistant\bin\Debug\AVAssistantLibrary.dll
 E:\AV Assistant\AVAssistant\bin\Debug\AVAssistantLibrary.pdb
 E:\AV Assistant\AVAssistant\obj\Debug\AVAssistant.csprojResolveAssemblyReference.cache
-E:\AV Assistant\AVAssistant\obj\Debug\AVAssistant.AV_Assistant.resources
 E:\AV Assistant\AVAssistant\obj\Debug\AVAssistant.Properties.Resources.resources
 E:\AV Assistant\AVAssistant\obj\Debug\AVAssistant.csproj.GenerateResource.Cache
 E:\AV Assistant\AVAssistant\obj\Debug\AVAssistant.exe
 E:\AV Assistant\AVAssistant\obj\Debug\AVAssistant.pdb
+E:\AV Assistant\AVAssistant\obj\Debug\AVAssistant.avAssistantForm.resources
