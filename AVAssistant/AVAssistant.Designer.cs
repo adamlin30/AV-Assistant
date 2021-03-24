@@ -59,11 +59,14 @@
             this.timeDescendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.actressToolStripComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.searchCoverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortActressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.genreGroupBox = new System.Windows.Forms.GroupBox();
+            this.videoFilterLabel = new System.Windows.Forms.Label();
+            this.videoFilterTextBox = new System.Windows.Forms.TextBox();
             this.avStudioTabPage = new System.Windows.Forms.TabPage();
             this.studioDataGridView = new System.Windows.Forms.DataGridView();
             this.avActressTabPage = new System.Windows.Forms.TabPage();
@@ -91,8 +94,6 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.coverPictureBox = new System.Windows.Forms.PictureBox();
             this.thumbnailBrowser = new System.Windows.Forms.FlowLayoutPanel();
-            this.videoFilterTextBox = new System.Windows.Forms.TextBox();
-            this.videoFilterLabel = new System.Windows.Forms.Label();
             this.avTabControl.SuspendLayout();
             this.infoTabPage.SuspendLayout();
             this.infoGroupBox.SuspendLayout();
@@ -399,7 +400,7 @@
             this.sortActressToolStripMenuItem});
             this.videoListContextMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.videoListContextMenuStrip.Name = "contextMenuStrip1";
-            this.videoListContextMenuStrip.Size = new System.Drawing.Size(225, 192);
+            this.videoListContextMenuStrip.Size = new System.Drawing.Size(225, 214);
             // 
             // nameAscendingToolStripMenuItem
             // 
@@ -436,15 +437,23 @@
             // 
             // renameToolStripMenuItem
             // 
+            this.renameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.actressToolStripComboBox});
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
             this.renameToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
             this.renameToolStripMenuItem.Text = "Rename";
+            // 
+            // actressToolStripComboBox
+            // 
+            this.actressToolStripComboBox.Name = "actressToolStripComboBox";
+            this.actressToolStripComboBox.Size = new System.Drawing.Size(121, 24);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -475,6 +484,24 @@
             this.genreGroupBox.TabIndex = 16;
             this.genreGroupBox.TabStop = false;
             this.genreGroupBox.Text = "Genre";
+            // 
+            // videoFilterLabel
+            // 
+            this.videoFilterLabel.AutoSize = true;
+            this.videoFilterLabel.Location = new System.Drawing.Point(6, 255);
+            this.videoFilterLabel.Name = "videoFilterLabel";
+            this.videoFilterLabel.Size = new System.Drawing.Size(83, 19);
+            this.videoFilterLabel.TabIndex = 18;
+            this.videoFilterLabel.Text = "Video Filter";
+            // 
+            // videoFilterTextBox
+            // 
+            this.videoFilterTextBox.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.videoFilterTextBox.Location = new System.Drawing.Point(6, 277);
+            this.videoFilterTextBox.Name = "videoFilterTextBox";
+            this.videoFilterTextBox.Size = new System.Drawing.Size(102, 27);
+            this.videoFilterTextBox.TabIndex = 4;
+            this.videoFilterTextBox.TextChanged += new System.EventHandler(this.videoFilterTextBox_TextChanged);
             // 
             // avStudioTabPage
             // 
@@ -725,24 +752,6 @@
             this.thumbnailBrowser.TabIndex = 17;
             this.thumbnailBrowser.MouseHover += new System.EventHandler(this.thumbnailBrowser_MouseHover);
             // 
-            // videoFilterTextBox
-            // 
-            this.videoFilterTextBox.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.videoFilterTextBox.Location = new System.Drawing.Point(6, 277);
-            this.videoFilterTextBox.Name = "videoFilterTextBox";
-            this.videoFilterTextBox.Size = new System.Drawing.Size(102, 27);
-            this.videoFilterTextBox.TabIndex = 4;
-            this.videoFilterTextBox.TextChanged += new System.EventHandler(this.videoFilterTextBox_TextChanged);
-            // 
-            // videoFilterLabel
-            // 
-            this.videoFilterLabel.AutoSize = true;
-            this.videoFilterLabel.Location = new System.Drawing.Point(6, 255);
-            this.videoFilterLabel.Name = "videoFilterLabel";
-            this.videoFilterLabel.Size = new System.Drawing.Size(83, 19);
-            this.videoFilterLabel.TabIndex = 18;
-            this.videoFilterLabel.Text = "Video Filter";
-            // 
             // avAssistantForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -824,7 +833,6 @@
         private System.Windows.Forms.ToolStripMenuItem timeAscendingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem timeDescendingToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem searchCoverToolStripMenuItem;
@@ -854,6 +862,8 @@
         private System.Windows.Forms.ToolStripMenuItem alwaysOnTopToolStripMenuItem;
         private System.Windows.Forms.TextBox videoFilterTextBox;
         private System.Windows.Forms.Label videoFilterLabel;
+        private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox actressToolStripComboBox;
     }
 }
 

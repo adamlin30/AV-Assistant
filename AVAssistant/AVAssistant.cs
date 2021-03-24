@@ -35,7 +35,7 @@ namespace AVAssistant
 
             video.drives = drives;
             actress.drives = drives;
-            actress.ListActress(this.actressListBox, this.actressDataGridView);
+            actress.ListActress(this.actressListBox, this.actressDataGridView, this.actressToolStripComboBox);
             video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
             video.ListGenre(genreDataGridView);
         }
@@ -149,7 +149,7 @@ namespace AVAssistant
 
                 if (rankCheckedListBox.CheckedItems.Count == 0)
                 {
-                    actress.ListActress(this.actressListBox, this.actressDataGridView);
+                    actress.ListActress(this.actressListBox, this.actressDataGridView, this.actressToolStripComboBox);
                 }
             }));
         }
@@ -477,6 +477,19 @@ namespace AVAssistant
                     videoListBox.Items.Add(s);
                 }
                 numOfFileTextBox.Text = videoListBox.Items.Count.ToString();
+            }
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var confirmResult = MessageBox.Show("Are you sure to delete " + videoFolder + "??", "CONFIRM DELETE!!", MessageBoxButtons.OKCancel);
+            // read only problem
+            if (confirmResult == DialogResult.OK)
+            {
+                folderUtility.DeleteDirectory(videoFolder, true);
+                video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
+                video.ListGenre(genreDataGridView);
+                coverPictureBox.Image = null;
             }
         }
     }

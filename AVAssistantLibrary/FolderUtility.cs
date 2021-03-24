@@ -20,5 +20,31 @@ namespace AVAssistantLibrary
 
             return Path.Combine(dt.Rows[index]["Drive"].ToString(), selectedVideo);
         }
+
+        public void DeleteDirectory(string path, bool recursive)
+        {
+            if (recursive)
+            {
+                var subfolders = Directory.GetDirectories(path);
+                foreach (var s in subfolders)
+                {
+                    DeleteDirectory(s, recursive);
+                }
+            }
+            var files = Directory.GetFiles(path);
+            foreach (var f in files)
+            {
+                var attr = File.GetAttributes(f);
+                if ((attr & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+                {
+                    File.SetAttributes(f, attr ^ FileAttributes.ReadOnly);
+                }
+                File.Delete(f);
+            }
+
+            // At this point, all the files and sub-folders have been deleted.
+            // So we delete the empty folder using the OOTB Directory.Delete method.
+            Directory.Delete(path);
+        }
     }
 }
