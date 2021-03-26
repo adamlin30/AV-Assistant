@@ -400,7 +400,7 @@
             this.sortActressToolStripMenuItem});
             this.videoListContextMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.videoListContextMenuStrip.Name = "contextMenuStrip1";
-            this.videoListContextMenuStrip.Size = new System.Drawing.Size(225, 214);
+            this.videoListContextMenuStrip.Size = new System.Drawing.Size(225, 192);
             // 
             // nameAscendingToolStripMenuItem
             // 
@@ -447,6 +447,7 @@
             // 
             this.actressToolStripComboBox.Name = "actressToolStripComboBox";
             this.actressToolStripComboBox.Size = new System.Drawing.Size(121, 24);
+            this.actressToolStripComboBox.SelectedIndexChanged += new System.EventHandler(this.actressToolStripComboBox_SelectedIndexChanged);
             // 
             // deleteToolStripMenuItem
             // 

@@ -282,7 +282,7 @@ namespace AVAssistant
 
         private void searchCoverToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process.Start("https://www.google.com.tw/?gws_rd=ssl#q=" + videoListBox.Text + "+dmm+jpg");
+            Process.Start("https://www.google.com/search?q=" + videoListBox.Text + "+dmm+jpg");
         }
 
         private void sortActressToolStripMenuItem_Click(object sender, EventArgs e)
@@ -491,6 +491,76 @@ namespace AVAssistant
                 video.ListGenre(genreDataGridView);
                 coverPictureBox.Image = null;
             }
+        }
+
+        public Form renameForm = new Form();
+
+        private void actressToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            videoListContextMenuStrip.Hide();
+            //MessageBox.Show(actressToolStripComboBox.SelectedItem.ToString());
+            if (!string.IsNullOrEmpty(actressToolStripComboBox.SelectedItem.ToString())) // if no actress name pciked, skip renaming
+            {
+                if (actressToolStripComboBox.SelectedItem.ToString() == "NEW NAME")
+                {
+                    //https://stackoverflow.com/questions/5427020/prompt-dialog-in-windows-forms
+
+                    renameForm.Width = 200;
+                    renameForm.Height = 150;
+                    renameForm.FormBorderStyle = FormBorderStyle.FixedDialog;
+                    renameForm.Text = "Enter New Actress Name";
+                    renameForm.StartPosition = FormStartPosition.CenterScreen;
+
+                    Label label = new Label() { Left = 50, Top = 10, Text = "Actress Name:" };
+                    TextBox textBoxActressName = new TextBox() { Left = 50, Top = 40, Width = 100 };
+                    Button confirmButton = new Button() { Text = "OK", Left = 50, Top = 70, Width = 100, DialogResult = DialogResult.OK };
+                    renameForm.Controls.Add(label);
+                    renameForm.Controls.Add(textBoxActressName);
+                    renameForm.Controls.Add(confirmButton);
+                    renameForm.AcceptButton = confirmButton;
+                    renameForm.TopLevel = true;
+                    //prompt.Dock = DockStyle.Top;
+                    confirmButton.Click += (sender1, e1) => confirmButton_Click(sender1, e1, textBoxActressName.Text);
+                    //this.Controls.Add(prompt);
+                    renameForm.Show();
+                }
+                else
+                {
+                    rename(actressToolStripComboBox.SelectedItem.ToString());
+                }
+            }
+        }
+
+        public void confirmButton_Click(object sender, EventArgs e, string newActressName)
+        {
+            //MessageBox.Show("");
+            renameForm.Hide();
+            rename(newActressName);
+            // Start to rename
+        }
+
+        public void rename(string actressName)
+        {
+            DirectoryInfo di = new DirectoryInfo(videoFolder);
+            FileInfo[] subFiles = di.GetFiles();
+
+            string fileType = @"*.jpg; *.avi; *.mkv; *.mp4; *.mpg; *.wmv; *.iso";
+
+            foreach (FileInfo sub in subFiles)
+            {
+                if (fileType.Contains(Path.GetExtension(sub.FullName)))
+                {
+                    File.Move(sub.FullName, Path.Combine(videoFolder, videoListBox.Text + Path.GetExtension(sub.FullName)));
+                }
+                else
+                {
+                    File.Delete(sub.FullName);
+                }
+            }
+            Directory.Move(videoFolder, videoFolder + " - " + actressName);
+            actress.ListActress(this.actressListBox, this.actressDataGridView, this.actressToolStripComboBox);
+            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
+            video.ListGenre(genreDataGridView);
         }
     }
 }

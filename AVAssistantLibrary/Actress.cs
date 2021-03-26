@@ -24,6 +24,8 @@ namespace AVAssistantLibrary
             var actressScore = new List<string>();
             DataTable dtActressInFile = new DataTable();
 
+            cb.Items.Clear();
+
             dtActressInFile = fileUtility.ReadCSV(@"E:\temp\AV_Actress_C.csv");
             //read csv file, source 1: CSV
             dgv.DataSource = dtActressInFile; //update actressDataGridView
@@ -57,14 +59,14 @@ namespace AVAssistantLibrary
             actressNameFromFolderArr = actressNameFromFolder.Distinct().ToArray();
             Array.Sort(actressNameFromFolderArr);
 
+            cb.Text = "--Select Actress--";
+            cb.Items.Add("NEW NAME");
             foreach (string i in actressNameFromFolderArr)
             {
                 lb.Items.Add(i); //insert actress name to listbox
                 //https://social.msdn.microsoft.com/Forums/windows/en-US/8d02a333-35e3-4705-a71e-4c0598395f04/insert-subitem-to-items-from-contextmenustrip-in-runtime-and-access-to-subitems?forum=winforms
                 //((ToolStripMenuItem)cms.Items[5]).DropDownItems.Add(i); // insert actress names to context menu
                 cb.Items.Add(i);
-                //cb.SelectedIndex = 0;
-                cb.Text = "--Select Actress--";
             }
 
             string[] actressNameAllArr = actressNameInFile.Distinct().ToArray(); //actress in CSV + actress from folder
