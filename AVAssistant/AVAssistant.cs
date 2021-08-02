@@ -562,5 +562,10 @@ namespace AVAssistant
             video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
             video.ListGenre(genreDataGridView);
         }
+
+        private void clearFilterButton_Click(object sender, EventArgs e)
+        {
+            videoFilterTextBox.Text = "";
+        }
     }
 }

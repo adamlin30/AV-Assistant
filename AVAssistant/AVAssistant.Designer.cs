@@ -94,6 +94,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.coverPictureBox = new System.Windows.Forms.PictureBox();
             this.thumbnailBrowser = new System.Windows.Forms.FlowLayoutPanel();
+            this.clearFilterButton = new System.Windows.Forms.Button();
             this.avTabControl.SuspendLayout();
             this.infoTabPage.SuspendLayout();
             this.infoGroupBox.SuspendLayout();
@@ -477,6 +478,7 @@
             // 
             // genreGroupBox
             // 
+            this.genreGroupBox.Controls.Add(this.clearFilterButton);
             this.genreGroupBox.Controls.Add(this.videoFilterLabel);
             this.genreGroupBox.Controls.Add(this.videoFilterTextBox);
             this.genreGroupBox.Location = new System.Drawing.Point(234, 37);
@@ -753,6 +755,16 @@
             this.thumbnailBrowser.TabIndex = 17;
             this.thumbnailBrowser.MouseHover += new System.EventHandler(this.thumbnailBrowser_MouseHover);
             // 
+            // clearFilterButton
+            // 
+            this.clearFilterButton.Location = new System.Drawing.Point(6, 310);
+            this.clearFilterButton.Name = "clearFilterButton";
+            this.clearFilterButton.Size = new System.Drawing.Size(102, 28);
+            this.clearFilterButton.TabIndex = 19;
+            this.clearFilterButton.Text = "Clear Filter";
+            this.clearFilterButton.UseVisualStyleBackColor = true;
+            this.clearFilterButton.Click += new System.EventHandler(this.clearFilterButton_Click);
+            // 
             // avAssistantForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -865,6 +877,7 @@
         private System.Windows.Forms.Label videoFilterLabel;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox actressToolStripComboBox;
+        private System.Windows.Forms.Button clearFilterButton;
     }
 }
 
