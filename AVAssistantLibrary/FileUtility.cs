@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Diagnostics; //process
 using System.Drawing;
 using System.Windows;
+using System.Threading;
 
 namespace AVAssistantLibrary
 {
@@ -74,29 +75,45 @@ namespace AVAssistantLibrary
                         string cID = s.Name;
                         string[] cIDMakerNumber = cID.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
 
-                        int makerIndex = Array.IndexOf(maker, cIDMakerNumber[0]); //find index from the av maker array
-                        if (makerIndex >= 0)
+                        //int makerIndex = Array.IndexOf(maker, cIDMakerNumber[0]); //find index from the av maker array
+                        int[] makerIndex = maker.Select((b, i) 
+                            => b == cIDMakerNumber[0] ? i : -1).Where(i => i != -1).ToArray();
+
+                        if (makerIndex.Length > 0)
                         {
-                            string afterMatch = link[makerIndex].Substring(link[makerIndex].IndexOf(cIDMakerNumber[0].ToLower()) + cIDMakerNumber[0].Length);
-                            //https://stackoverflow.com/questions/8224270/regular-expression-to-get-all-characters-before
-                            string beforeMatch = Regex.Match(afterMatch, @"^.*?(?=/)").ToString(); //find old number from http link
-
-                            int oldNum = beforeMatch.Length;
-                            int newNum = cIDMakerNumber[1].Length;
-                            int offset = oldNum - newNum;
-                            string newID = "";
-
-                            if (offset >= 0)
+                            foreach (int m in makerIndex)
                             {
-                                newID = beforeMatch.Remove(offset, newNum);
-                                newID = newID.Insert(offset, cIDMakerNumber[1]);
+                                string afterMatch = link[m].Substring(link[m].IndexOf(cIDMakerNumber[0].ToLower()) + cIDMakerNumber[0].Length);
+                                //https://stackoverflow.com/questions/8224270/regular-expression-to-get-all-characters-before
+                                string beforeMatch = Regex.Match(afterMatch, @"^.*?(?=/)").ToString(); //find old number from http link
+
+                                int oldNum = beforeMatch.Length;
+                                int newNum = cIDMakerNumber[1].Length;
+                                int offset = oldNum - newNum;
+                                string newID = "";
+
+                                if (offset >= 0)
+                                {
+                                    newID = beforeMatch.Remove(offset, newNum);
+                                    newID = newID.Insert(offset, cIDMakerNumber[1]);
+                                }
+
+                                string newLink = link[m].Replace(beforeMatch, newID); //replace old number with new number
+                                string coverFilename = s.FullName + "\\" + s.Name + ".jpg";
+                                string arg = newLink + @" -O " + s.FullName + "\\" + s.Name + ".jpg" + " -T 3";
+
+                                CallExecutable(@"E:\temp\wget.exe", arg);
+
+                                Thread.Sleep(800);
+                                if (new FileInfo(coverFilename).Length == 0)
+                                {
+                                    File.Delete(coverFilename);
+                                }
+                                else
+                                {
+                                    tb.Text = tb.Text + newLink + "\r\n";
+                                }
                             }
-
-                            string newLink = link[makerIndex].Replace(beforeMatch, newID); //replace old number with new number
-                            string arg = newLink + @" -O " + s.FullName + "\\" + s.Name + ".jpg" + " -T 3";
-
-                            CallExecutable(@"E:\temp\wget.exe", arg);
-                            tb.Text = tb.Text + newLink + "\r\n";
                         }
                     }
                 }
