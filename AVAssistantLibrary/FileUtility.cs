@@ -86,19 +86,24 @@ namespace AVAssistantLibrary
                                 string afterMatch = link[m].Substring(link[m].IndexOf(cIDMakerNumber[0].ToLower()) + cIDMakerNumber[0].Length);
                                 //https://stackoverflow.com/questions/8224270/regular-expression-to-get-all-characters-before
                                 string beforeMatch = Regex.Match(afterMatch, @"^.*?(?=/)").ToString(); //find old number from http link
+                                string trimBeforeMatch = Regex.Match(beforeMatch, @"^.*?(?=so)").ToString();
+                                if (String.IsNullOrEmpty(trimBeforeMatch))
+                                {
+                                    trimBeforeMatch = beforeMatch;
+                                }
 
-                                int oldNum = beforeMatch.Length;
+                                int oldNum = trimBeforeMatch.Length;
                                 int newNum = cIDMakerNumber[1].Length;
                                 int offset = oldNum - newNum;
                                 string newID = "";
 
                                 if (offset >= 0)
                                 {
-                                    newID = beforeMatch.Remove(offset, newNum);
+                                    newID = trimBeforeMatch.Remove(offset, newNum);
                                     newID = newID.Insert(offset, cIDMakerNumber[1]);
                                 }
 
-                                string newLink = link[m].Replace(beforeMatch, newID); //replace old number with new number
+                                string newLink = link[m].Replace(trimBeforeMatch, newID); //replace old number with new number
                                 string coverFilename = s.FullName + "\\" + s.Name + ".jpg";
                                 string arg = newLink + @" -O " + s.FullName + "\\" + s.Name + ".jpg" + " -T 3";
 
@@ -112,6 +117,7 @@ namespace AVAssistantLibrary
                                 else
                                 {
                                     tb.Text = tb.Text + newLink + "\r\n";
+                                    break;
                                 }
                             }
                         }
@@ -188,7 +194,12 @@ namespace AVAssistantLibrary
         public void ShowThumbnail(FlowLayoutPanel flp, TreeView tv, DataGridView dgv, string imageFile)
         {
             PictureBox img = new PictureBox();
-            img.Image = Image.FromFile(imageFile);
+
+            using (FileStream image = new FileStream(imageFile, FileMode.Open))
+            {
+                img.Image = Image.FromStream(image);
+                //https://blog.csdn.net/LongtengGensSupreme/article/details/69421897
+            }
             img.SizeMode = PictureBoxSizeMode.Zoom;
             img.Dock = DockStyle.Top;
             img.Height = 269; //cover resolution 800x538
@@ -204,6 +215,7 @@ namespace AVAssistantLibrary
             img.MouseEnter += (sender, e) => thumbnailViewer_MouseEnter(sender, e);
             img.MouseLeave += (sender, e) => thumbnailViewer_MouseLeave(sender, e);
             img.Tag = imageFile; // cover path stored in the tag
+            //img.Dispose();
         }
 
         private void thumbnailViewer_Click(object sender, EventArgs e, TreeView tv)
