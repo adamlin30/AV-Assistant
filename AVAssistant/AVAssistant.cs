@@ -285,6 +285,18 @@ namespace AVAssistant
             Process.Start("https://www.google.com/search?q=" + videoListBox.Text + "+dmm+jpg");
         }
 
+        private void copyActressNameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string[] cIDActress = videoListBox.Text.Split(new string[] { " - " }, StringSplitOptions.RemoveEmptyEntries);
+            Clipboard.SetText(cIDActress[1]);
+        }
+
+        private void copyVideoIDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string[] cIDActress = videoListBox.Text.Split(new string[] { " - " }, StringSplitOptions.RemoveEmptyEntries);
+            Clipboard.SetText(cIDActress[0]);
+        }
+
         private void sortActressToolStripMenuItem_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < rankCheckedListBox.Items.Count; i++)
@@ -293,7 +305,7 @@ namespace AVAssistant
             }
             actressListBox.ClearSelected();
 
-            string[] cIDActress = videoFolder.Split(new string[] { " - " }, StringSplitOptions.RemoveEmptyEntries);
+            string[] cIDActress = videoListBox.Text.Split(new string[] { " - " }, StringSplitOptions.RemoveEmptyEntries);
             actressListBox.Text = cIDActress[1]; //0:cID 1:actress
             int score = -999;
 

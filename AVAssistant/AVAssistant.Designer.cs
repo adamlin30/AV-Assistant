@@ -65,6 +65,7 @@
             this.searchCoverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortActressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.genreGroupBox = new System.Windows.Forms.GroupBox();
+            this.clearFilterButton = new System.Windows.Forms.Button();
             this.videoFilterLabel = new System.Windows.Forms.Label();
             this.videoFilterTextBox = new System.Windows.Forms.TextBox();
             this.avStudioTabPage = new System.Windows.Forms.TabPage();
@@ -94,7 +95,8 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.coverPictureBox = new System.Windows.Forms.PictureBox();
             this.thumbnailBrowser = new System.Windows.Forms.FlowLayoutPanel();
-            this.clearFilterButton = new System.Windows.Forms.Button();
+            this.copyActressNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyVideoIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.avTabControl.SuspendLayout();
             this.infoTabPage.SuspendLayout();
             this.infoGroupBox.SuspendLayout();
@@ -393,15 +395,17 @@
             this.nameDescendingToolStripMenuItem,
             this.timeAscendingToolStripMenuItem,
             this.timeDescendingToolStripMenuItem,
+            this.sortActressToolStripMenuItem,
             this.toolStripSeparator1,
             this.renameToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.toolStripSeparator2,
             this.searchCoverToolStripMenuItem,
-            this.sortActressToolStripMenuItem});
+            this.copyActressNameToolStripMenuItem,
+            this.copyVideoIDToolStripMenuItem});
             this.videoListContextMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.videoListContextMenuStrip.Name = "contextMenuStrip1";
-            this.videoListContextMenuStrip.Size = new System.Drawing.Size(225, 192);
+            this.videoListContextMenuStrip.Size = new System.Drawing.Size(225, 258);
             // 
             // nameAscendingToolStripMenuItem
             // 
@@ -487,6 +491,16 @@
             this.genreGroupBox.TabIndex = 16;
             this.genreGroupBox.TabStop = false;
             this.genreGroupBox.Text = "Genre";
+            // 
+            // clearFilterButton
+            // 
+            this.clearFilterButton.Location = new System.Drawing.Point(6, 310);
+            this.clearFilterButton.Name = "clearFilterButton";
+            this.clearFilterButton.Size = new System.Drawing.Size(102, 28);
+            this.clearFilterButton.TabIndex = 19;
+            this.clearFilterButton.Text = "Clear Filter";
+            this.clearFilterButton.UseVisualStyleBackColor = true;
+            this.clearFilterButton.Click += new System.EventHandler(this.clearFilterButton_Click);
             // 
             // videoFilterLabel
             // 
@@ -755,15 +769,19 @@
             this.thumbnailBrowser.TabIndex = 17;
             this.thumbnailBrowser.MouseHover += new System.EventHandler(this.thumbnailBrowser_MouseHover);
             // 
-            // clearFilterButton
+            // copyActressNameToolStripMenuItem
             // 
-            this.clearFilterButton.Location = new System.Drawing.Point(6, 310);
-            this.clearFilterButton.Name = "clearFilterButton";
-            this.clearFilterButton.Size = new System.Drawing.Size(102, 28);
-            this.clearFilterButton.TabIndex = 19;
-            this.clearFilterButton.Text = "Clear Filter";
-            this.clearFilterButton.UseVisualStyleBackColor = true;
-            this.clearFilterButton.Click += new System.EventHandler(this.clearFilterButton_Click);
+            this.copyActressNameToolStripMenuItem.Name = "copyActressNameToolStripMenuItem";
+            this.copyActressNameToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.copyActressNameToolStripMenuItem.Text = "Copy Actress Name";
+            this.copyActressNameToolStripMenuItem.Click += new System.EventHandler(this.copyActressNameToolStripMenuItem_Click);
+            // 
+            // copyVideoIDToolStripMenuItem
+            // 
+            this.copyVideoIDToolStripMenuItem.Name = "copyVideoIDToolStripMenuItem";
+            this.copyVideoIDToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.copyVideoIDToolStripMenuItem.Text = "Copy Video ID";
+            this.copyVideoIDToolStripMenuItem.Click += new System.EventHandler(this.copyVideoIDToolStripMenuItem_Click);
             // 
             // avAssistantForm
             // 
@@ -878,6 +896,8 @@
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox actressToolStripComboBox;
         private System.Windows.Forms.Button clearFilterButton;
+        private System.Windows.Forms.ToolStripMenuItem copyActressNameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyVideoIDToolStripMenuItem;
     }
 }
 
