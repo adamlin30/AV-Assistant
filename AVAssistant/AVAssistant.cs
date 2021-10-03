@@ -359,11 +359,13 @@ namespace AVAssistant
             genreForm.Controls.Add(genreDataGridView);
             genreForm.Controls.Add(updateGenreButton);
             genreForm.Controls.Add(exportGenreButton);
+            genreForm.Controls.Add(label1);
 
             genreDataGridView.Size = new Size(910, 498);
             genreDataGridView.Location = new Point(0, 0);
             updateGenreButton.Location = new Point(0, 500);
             exportGenreButton.Location = new Point(500, 500);
+            label1.Location = new Point(200, 500);
 
             genreForm.FormClosing += genreForm_FormClosing; //detect x button event
         }
@@ -417,7 +419,7 @@ namespace AVAssistant
 
         private void updateGenreButton_Click(object sender, EventArgs e)
         {
-            //column video of AV video compares with column video of AV genre
+            //compare number of videos of AV video with the one of AV genre
             DataTable dtVideo = (DataTable)(videoDataGridView.DataSource);
             string[] colVideo = new string[dtVideo.Rows.Count];
 
@@ -439,19 +441,21 @@ namespace AVAssistant
 
             foreach (string r in removeFromGenre)
             {
-                int removeIndex = Array.IndexOf(colGenre, r);
-                dtGenre.Rows.Remove(dtGenre.Rows[removeIndex]);
+                int removeIndex = Array.IndexOf(colGenre, r); //find video is not present
+                colGenre = colGenre.Where((val, idx) => idx != removeIndex).ToArray(); //delete an element from an array
+                //https://stackoverflow.com/questions/496896/how-to-delete-an-element-from-an-array-in-c-sharp
+                dtGenre.Rows.Remove(dtGenre.Rows[removeIndex]); //delete an element from the table array
             }
 
             foreach (string a in addToGenre)
             {
-                dtGenre.Rows.Add(a, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                dtGenre.Rows.Add(a, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0); // add an element to the table
             }
 
             genreDataGridView.DataSource = dtGenre;
             MessageBox.Show("Record(s) Removed : " + removeFromGenre.Count() + "\n"
                           + "Record(s) Added      : " + addToGenre.Count() + "\n"
-                          + "Total Records            : " + genreDataGridView.Rows.Count);
+                          + "Total Records            : " + (genreDataGridView.Rows.Count - 1));
         }
 
         private void genreForm_FormClosing(object sender, FormClosingEventArgs e)
