@@ -22,7 +22,8 @@ namespace AVAssistant
         FolderUtility folderUtility = new FolderUtility();
         Video video = new Video();
         Actress actress = new Actress();
-
+        Global global = new Global();
+        
         public avAssistantForm()
         {
             InitializeComponent();
@@ -30,14 +31,15 @@ namespace AVAssistant
             thumbnailBrowser.Hide();
             coverPictureBox.Show();
             //coverPictureBox.Location = new Point(664, 27);
-
+            
             fileUtility.DownloadCover(this.coverLinkTextBox, this.studioDataGridView);
-
-            video.drives = drives;
-            actress.drives = drives;
-            actress.ListActress(this.actressListBox, this.actressDataGridView, this.actressToolStripComboBox);
-            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
+            Global.ScanDrive(drives); // Scan all drives first and list all video folders
+            //video.drives = drives;
+            //actress.drives = drives;
+            video.UpdateVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
             video.ListGenre(genreDataGridView);
+            actress.UpdateActress(this.actressListBox, this.actressDataGridView, this.actressRenameToolStripComboBox);
+
         }
 
         private void avTabControl_SelectedIndexChanged(object sender, EventArgs e)
@@ -139,7 +141,7 @@ namespace AVAssistant
                 string[] filteredActressArr = filteredActress.ToArray();
                 actressListBox.Items.Clear();
 
-                foreach (string s in actress.actressNameFromFolderArr)
+                foreach (string s in actress.ActressNameFromFolderArr)
                 {
                     if (filteredActressArr.Contains(s))
                     {
@@ -149,7 +151,7 @@ namespace AVAssistant
 
                 if (rankCheckedListBox.CheckedItems.Count == 0)
                 {
-                    actress.ListActress(this.actressListBox, this.actressDataGridView, this.actressToolStripComboBox);
+                    actress.UpdateActress(this.actressListBox, this.actressDataGridView, this.actressRenameToolStripComboBox);
                 }
             }));
         }
@@ -160,32 +162,42 @@ namespace AVAssistant
             videoFileTreeView.Nodes.Clear();
             coverPictureBox.Image = null;
 
-            videoFolder = Path.Combine(fileUtility.SearchVideoDrive(this.videoDataGridView, videoListBox.Text));
-
-            DirectoryInfo di = new DirectoryInfo(videoFolder);
-            FileInfo[] subFiles = di.GetFiles();
-
-            foreach (FileInfo s in subFiles)
+            if (!String.IsNullOrEmpty(videoListBox.Text))
             {
-                TreeNode root = new TreeNode(s.Name);
-                if (s.Name.Contains(@".jpg"))
-                {
-                    fileUtility.ShowImage(this.coverPictureBox, s.FullName);  //shows AV cover if jpg exists 
-                }
+                videoFolder = Path.Combine(fileUtility.SearchVideoDrive(this.videoDataGridView, videoListBox.Text));
 
-                string fileType = @"*.avi; *.mkv; *.mp4; *.mpg; *.wmv; *.iso";
-                if (fileType.Contains(Path.GetExtension(s.Name)))
-                {
-                    fileUtility.GetFileSize(this.fileSizeTextBox, s.FullName);
+                DirectoryInfo di = new DirectoryInfo(videoFolder);
+                FileInfo[] subFiles = di.GetFiles();
 
+                foreach (FileInfo s in subFiles)
+                {
+                    TreeNode root = new TreeNode(s.Name);
+                    if (s.Name.Contains(@".jpg"))
+                    {
+                        fileUtility.ShowImage(this.coverPictureBox, s.FullName);  //shows AV cover if jpg exists 
+                    }
+
+                    string fileType = @"*.avi; *.mkv; *.mp4; *.mpg; *.wmv; *.iso";
+                    if (fileType.Contains(Path.GetExtension(s.Name)))
+                    {
+                        fileUtility.GetFileSize(this.fileSizeTextBox, s.FullName);
+
+                    }
+                    videoFileTreeView.Nodes.Add(root);
                 }
-                videoFileTreeView.Nodes.Add(root);
+            }
+            else
+            {
+                videoFolder = null;
             }
         }
 
         private void videoListBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            fileUtility.CallExecutable(@"C:\Windows\explorer.exe", videoFolder); //open video folder
+            if (!String.IsNullOrEmpty(videoFolder))
+            {
+                fileUtility.CallExecutable(@"C:\Windows\explorer.exe", videoFolder); //open video folder
+            }
         }
 
         private void videoListBox_MouseDown(object sender, MouseEventArgs e)
@@ -222,7 +234,7 @@ namespace AVAssistant
                 {
                     if (genreCheckedListBox.GetItemChecked(i))
                     {
-                        gnereSelected.Add(i.ToString()); //check ranking selected
+                        gnereSelected.Add(i.ToString()); // Check ranking selected
                     }
                 }
 
@@ -231,12 +243,12 @@ namespace AVAssistant
                 int sum = 0;
                 int counter = 0;
 
-                for (int i = 0; i < genreDataGridView.Rows.Count - 1; i++) //skip the last row
+                for (int i = 0; i < genreDataGridView.Rows.Count - 1; i++) // Skip the last row
                 {
                     sum = 0;
                     for (int j = 0; j < numOfGenreSelected; j++)
                     {
-                        int columnVal = int.Parse(genreSelectedArr[j]); //0:bondage 1:classic etc.
+                        int columnVal = int.Parse(genreSelectedArr[j]); // 0:bondage 1:classic etc.
                         sum = sum + int.Parse(genreDataGridView.Rows[i].Cells[columnVal + 1].Value.ToString());
                     }
 
@@ -250,34 +262,46 @@ namespace AVAssistant
 
                 if (genreCheckedListBox.CheckedItems.Count == 0)
                 {
-                    video.ListVideo(this.videoListBox, this.actressDataGridView, this.numOfFileTextBox);
+                    video.UpdateVideo(this.videoListBox, this.actressDataGridView, this.numOfFileTextBox);
                 }
             }));
         }
 
         //*****Mouse Menu*****//
-        private void nameAscendingToolStripMenuItem_Click(object sender, EventArgs e)
+        private void actressAscendingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            video.sortBy = "Video ASC";
-            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
+            video.SortBy = "Actress ASC";
+            video.UpdateVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
         }
 
-        private void nameDescendingToolStripMenuItem_Click(object sender, EventArgs e)
+        private void actressDescendingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            video.sortBy = "Video DESC";
-            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
+            video.SortBy = "Actress DESC";
+            video.UpdateVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
+        }
+
+        private void videoAscendingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            video.SortBy = "Video ASC";
+            video.UpdateVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
+        }
+
+        private void videoDescendingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            video.SortBy = "Video DESC";
+            video.UpdateVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
         }
 
         private void timeAscendingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            video.sortBy = "Creation Time ASC";
-            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
+            video.SortBy = "Creation Time ASC";
+            video.UpdateVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
         }
 
         private void timeDescendingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            video.sortBy = "Creation Time DESC";
-            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
+            video.SortBy = "Creation Time DESC";
+            video.UpdateVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
         }
 
         private void searchCoverToolStripMenuItem_Click(object sender, EventArgs e)
@@ -306,32 +330,36 @@ namespace AVAssistant
             actressListBox.ClearSelected();
 
             string[] cIDActress = videoListBox.Text.Split(new string[] { " - " }, StringSplitOptions.RemoveEmptyEntries);
-            actressListBox.Text = cIDActress[1]; //0:cID 1:actress
-            int score = -999;
 
-            foreach (DataGridViewRow row in actressDataGridView.Rows)
+            if (cIDActress.Length == 2)
             {
-                if (row.Cells[0].Value != null) //skip the last row
+                actressListBox.Text = cIDActress[1]; //0:cID 1:actress
+                int score = -999;
+
+                foreach (DataGridViewRow row in actressDataGridView.Rows)
                 {
-                    //find the corresponding score for the actress
-                    if (actressListBox.Text.All(v => row.Cells[0].Value.ToString().Contains(v)))
+                    if (row.Cells[0].Value != null) //skip the last row
                     {
-                        score = int.Parse(row.Cells[1].Value.ToString());
+                        //find the corresponding score for the actress
+                        if (actressListBox.Text.All(v => row.Cells[0].Value.ToString().Contains(v)))
+                        {
+                            score = int.Parse(row.Cells[1].Value.ToString());
+                        }
                     }
                 }
+
+                score = (score >= 5) ? 10 - score : 6; //score to rankCheckedListBox mapping
+
+                rankCheckedListBox.SetItemChecked(score, true);
+                this.BeginInvoke(new Action(() =>
+                {
+                    //highlight the actress
+                    actressListBox.SetSelected(actressListBox.Items.IndexOf(cIDActress[1]), true);
+                }
+                ));
+
+                avTabControl.SelectedIndex = 1;
             }
-
-            score = (score >= 5) ? 10 - score : 6; //score to rankCheckedListBox mapping
-
-            rankCheckedListBox.SetItemChecked(score, true);
-            this.BeginInvoke(new Action(() =>
-            {
-                //highlight the actress
-                actressListBox.SetSelected(actressListBox.Items.IndexOf(cIDActress[1]), true);
-            }
-            ));
-
-            avTabControl.SelectedIndex = 1;
         }
 
         //*****Menu*****//
@@ -345,14 +373,15 @@ namespace AVAssistant
             fileUtility.CallExecutable(@"notepad++.exe", "E:\\temp\\AV_Studio_C.csv");
         }
 
+        public Form genreForm = new Form();
+
         private void genreToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //dynamically generate a new form as Genre Editor
-            Form genreForm = new Form();
             genreForm.MinimizeBox = false;
             genreForm.MaximizeBox = false;
             genreForm.Text = "Genre Editor";
-            genreForm.Height = 620;
+            genreForm.Height = 680;
             genreForm.Width = 940;
             //genreForm.TopMost = true;
             genreForm.Show();
@@ -367,11 +396,31 @@ namespace AVAssistant
             exportGenreButton.Location = new Point(500, 500);
             label1.Location = new Point(200, 500);
 
-            genreForm.FormClosing += genreForm_FormClosing; //detect x button event
+
+            genreForm.FormClosing += genreForm_FormClosing; // Event for detect close window
+            genreDataGridView.SelectionChanged += genreDataGridView_SelectionChanged; // Event for sync the selection
+            // 2022/01/15: Sort the videoListBox by name ascending
+            videoAscendingToolStripMenuItem_Click(sender, e);
+            videoListBox.SetSelected(0, true); // 2022/01/15: Always select the first video
+
+            genreDataGridView.AllowUserToAddRows = false;
+            foreach (DataGridViewRow row in genreDataGridView.Rows)
+            {
+                int score = 0;
+                for (int i = 1; i < genreDataGridView.ColumnCount; i++)
+                {
+                    score = score + Convert.ToInt32(row.Cells[i].Value); //check if the video is classfied
+                }
+                if (score == 0)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Red;
+                }
+            }
         }
 
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            genreForm.Dispose(); // Force genreForm to close
             Application.Restart();
         }
 
@@ -383,6 +432,7 @@ namespace AVAssistant
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            genreForm.Dispose(); // Force genreForm to close
             Application.Exit();
         }
 
@@ -456,6 +506,25 @@ namespace AVAssistant
             MessageBox.Show("Record(s) Removed : " + removeFromGenre.Count() + "\n"
                           + "Record(s) Added      : " + addToGenre.Count() + "\n"
                           + "Total Records            : " + (genreDataGridView.Rows.Count - 1));
+
+            foreach (DataGridViewRow row in genreDataGridView.Rows)
+            {
+                int score = 0;
+                for (int i = 1; i < genreDataGridView.ColumnCount; i++)
+                {
+                    score = score + Convert.ToInt32(row.Cells[i].Value); //check if the video is classfied
+                }
+                if (score == 0)
+                {
+                    row.DefaultCellStyle.BackColor = Color.Red;
+                }
+            }
+        }
+
+        private void genreDataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            // 2022/01/15: Sync the selection between videoListBox and genreDataGridView
+            videoListBox.SetSelected(genreDataGridView.CurrentRow.Index, true);
         }
 
         private void genreForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -477,7 +546,7 @@ namespace AVAssistant
             videoListBox.Items.Clear();
             if (string.IsNullOrEmpty(videoFilterTextBox.Text) == false)
             {
-                foreach (string s in video.videoListBoxItems)
+                foreach (string s in video.VideoListBoxItems)
                 {
                     if (s.ToLower().Contains(videoFilterTextBox.Text))
                     {
@@ -488,7 +557,7 @@ namespace AVAssistant
             }
             else if (videoFilterTextBox.Text == "")
             {
-                foreach (string s in video.videoListBoxItems)
+                foreach (string s in video.VideoListBoxItems)
                 {
                     videoListBox.Items.Add(s);
                 }
@@ -498,26 +567,31 @@ namespace AVAssistant
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            int selectedVideo = this.videoListBox.SelectedIndex; // Get current video index
+
             var confirmResult = MessageBox.Show("Are you sure to delete " + videoFolder + "??", "CONFIRM DELETE!!", MessageBoxButtons.OKCancel);
             // read only problem
             if (confirmResult == DialogResult.OK)
             {
                 folderUtility.DeleteDirectory(videoFolder, true);
-                video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
+                Global.ScanDrive(drives);
+                video.UpdateVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
                 video.ListGenre(genreDataGridView);
                 coverPictureBox.Image = null;
             }
+
+            this.videoListBox.SelectedIndex = selectedVideo; // 2022/01/15: Select the next video
         }
 
         public Form renameForm = new Form();
 
-        private void actressToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void actressRenameToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             videoListContextMenuStrip.Hide();
             //MessageBox.Show(actressToolStripComboBox.SelectedItem.ToString());
-            if (!string.IsNullOrEmpty(actressToolStripComboBox.SelectedItem.ToString())) // if no actress name pciked, skip renaming
+            if (!string.IsNullOrEmpty(actressRenameToolStripComboBox.SelectedItem.ToString())) // if no actress name pciked, skip renaming
             {
-                if (actressToolStripComboBox.SelectedItem.ToString() == "NEW NAME")
+                if (actressRenameToolStripComboBox.SelectedItem.ToString() == "NEW NAME")
                 {
                     //https://stackoverflow.com/questions/5427020/prompt-dialog-in-windows-forms
 
@@ -536,26 +610,25 @@ namespace AVAssistant
                     renameForm.AcceptButton = confirmButton;
                     renameForm.TopLevel = true;
                     //prompt.Dock = DockStyle.Top;
-                    confirmButton.Click += (sender1, e1) => confirmButton_Click(sender1, e1, textBoxActressName.Text);
+                    confirmButton.Click += (sender1, e1) => ConfirmButton_Click(sender1, e1, textBoxActressName.Text);
                     //this.Controls.Add(prompt);
                     renameForm.Show();
                 }
                 else
                 {
-                    rename(actressToolStripComboBox.SelectedItem.ToString());
+                    Rename(actressRenameToolStripComboBox.SelectedItem.ToString());
                 }
             }
         }
 
-        public void confirmButton_Click(object sender, EventArgs e, string newActressName)
+        public void ConfirmButton_Click(object sender, EventArgs e, string newActressName)
         {
-            //MessageBox.Show("");
+            // MessageBox.Show("");
             renameForm.Hide();
-            rename(newActressName);
-            // Start to rename
+            Rename(newActressName); // Start to rename
         }
 
-        public void rename(string actressName)
+        public void Rename(string actressName)
         {
             DirectoryInfo di = new DirectoryInfo(videoFolder);
             FileInfo[] subFiles = di.GetFiles();
@@ -574,8 +647,9 @@ namespace AVAssistant
                 }
             }
             Directory.Move(videoFolder, videoFolder + " - " + actressName);
-            actress.ListActress(this.actressListBox, this.actressDataGridView, this.actressToolStripComboBox);
-            video.ListVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
+            actress.UpdateActress(this.actressListBox, this.actressDataGridView, this.actressRenameToolStripComboBox);
+            Global.ScanDrive(drives);
+            video.UpdateVideo(this.videoListBox, this.videoDataGridView, this.numOfFileTextBox);
             video.ListGenre(genreDataGridView);
         }
 

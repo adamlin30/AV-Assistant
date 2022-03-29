@@ -76,7 +76,7 @@ namespace AVAssistantLibrary
                         string[] cIDMakerNumber = cID.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
 
                         //int makerIndex = Array.IndexOf(maker, cIDMakerNumber[0]); //find index from the av maker array
-                        int[] makerIndex = maker.Select((b, i) 
+                        int[] makerIndex = maker.Select((b, i)
                             => b == cIDMakerNumber[0] ? i : -1).Where(i => i != -1).ToArray();
 
                         if (makerIndex.Length > 0)
@@ -208,17 +208,17 @@ namespace AVAssistantLibrary
             flp.Controls.Add(img);
 
             //add events to programmatically created PictureBox
-            img.Click += (sender, e) => thumbnailViewer_Click(sender, e, tv);
+            img.Click += (sender, e) => ThumbnailViewer_Click(sender, e, tv);
             //click the thumbnail, highlight the folder
-            img.MouseDoubleClick += (sender, e) => thumbnailViewer_MouseDoubleClick(sender, e, tv, dgv);
+            img.MouseDoubleClick += (sender, e) => ThumbnailViewer_MouseDoubleClick(sender, e, tv, dgv);
             //double click the thumbnail, open the video
-            img.MouseEnter += (sender, e) => thumbnailViewer_MouseEnter(sender, e);
-            img.MouseLeave += (sender, e) => thumbnailViewer_MouseLeave(sender, e);
+            img.MouseEnter += (sender, e) => ThumbnailViewer_MouseEnter(sender, e);
+            img.MouseLeave += (sender, e) => ThumbnailViewer_MouseLeave(sender, e);
             img.Tag = imageFile; // cover path stored in the tag
             //img.Dispose();
         }
 
-        private void thumbnailViewer_Click(object sender, EventArgs e, TreeView tv)
+        private void ThumbnailViewer_Click(object sender, EventArgs e, TreeView tv)
         {
             PictureBox clickedImage = (PictureBox)sender;
 
@@ -242,7 +242,7 @@ namespace AVAssistantLibrary
             }
         }
 
-        private void thumbnailViewer_MouseDoubleClick(object sender, EventArgs e, TreeView tv, DataGridView dgv)
+        private void ThumbnailViewer_MouseDoubleClick(object sender, EventArgs e, TreeView tv, DataGridView dgv)
         {
             string fileType = @"*.avi; *.mkv; *.mp4; *.mpg; *.wmv";
 
@@ -261,7 +261,7 @@ namespace AVAssistantLibrary
         public Form f = new Form();
         PictureBox img = new PictureBox();
 
-        private void thumbnailViewer_MouseEnter(object sender, EventArgs e)
+        private void ThumbnailViewer_MouseEnter(object sender, EventArgs e)
         {
             f.ShowInTaskbar = false;
             PictureBox clickedImage = (PictureBox)sender;
@@ -270,7 +270,13 @@ namespace AVAssistantLibrary
             f.FormBorderStyle = FormBorderStyle.None;
             img.Height = 536;
             img.Width = 800;
-            img.Image = Image.FromFile((string)clickedImage.Tag);
+            //img.Image = Image.FromFile((string)clickedImage.Tag);
+
+            // 2022/01/15: The image files can't be accessed by another process if using Image.FromFile 
+            using (FileStream image = new FileStream((string)clickedImage.Tag, FileMode.Open))
+            {
+                img.Image = Image.FromStream(image);
+            }
 
             new Cursor(Cursor.Current.Handle);
 
@@ -287,7 +293,7 @@ namespace AVAssistantLibrary
             f.Show();
         }
 
-        private void thumbnailViewer_MouseLeave(object sender, EventArgs e)
+        private void ThumbnailViewer_MouseLeave(object sender, EventArgs e)
         {
             f.Hide();
         }

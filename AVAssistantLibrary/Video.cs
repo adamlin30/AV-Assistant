@@ -12,62 +12,44 @@ namespace AVAssistantLibrary
 {
     public class Video
     {
-        public string[] drives { get; set; }
-        public string sortBy = "Creation Time DESC";
+        public string SortBy = "Creation Time DESC";
+        public List<string> VideoListBoxItems = new List<string>();
         FileUtility fileUtility = new FileUtility();
-        public List<string> videoListBoxItems = new List<string>();
 
-        public void ListVideo(ListBox lb, DataGridView dgv, TextBox tb)
+        // Everything about Video is now stored in the DtVideoCollection
+        public void UpdateVideo(ListBox lb, DataGridView dgv, TextBox tb)
         {
+            dgv.DataSource = Global.DtVideoCollection;
+            dgv.Columns[0].Width = 20;
+            dgv.Columns[1].Width = 100;
+            dgv.Columns[2].Width = 100;
+            dgv.Columns[3].Width = 100;
+            dgv.Columns[4].Width = 100;
+            dgv.Columns[5].Width = 100;
+            dgv.Columns[6].Width = 100;
+
             lb.Items.Clear();
 
-            //form.videoFileTreeView.Nodes.Clear();
-            //form.coverPictureBox.Image = null;
+            // Sort the table
+            Global.DtVideoCollection.DefaultView.Sort = SortBy;
+            Global.DtVideoCollection = Global.DtVideoCollection.DefaultView.ToTable();
 
-            DataTable dtVideo = new DataTable();
-            dtVideo.Columns.Add("Drive");
-            dtVideo.Columns.Add("Video");
-            dtVideo.Columns.Add("Creation Time");
-
-            foreach (var d in drives)
+            for (int i = 0; i < Global.DtVideoCollection.Rows.Count; i++)
             {
-                DirectoryInfo di = new DirectoryInfo(d);
-                DirectoryInfo[] subDirs = di.GetDirectories();
-
-                foreach (DirectoryInfo s in subDirs)
-                {
-                    if (Regex.Match(s.Name, @"^\w+-\d+\w? - \w+$|^\w+-\d+\w?$").Success)
-                    //search folders matching AAA-111 - Julia or AAA-111
-                    {
-                        string[] items = { s.Root.ToString(), s.Name, s.CreationTime.ToString("yyyy/MM/dd/ hh:mm:ss") };
-                        dtVideo.Rows.Add(items);
-                    }
-                }
+                lb.Items.Add(Global.DtVideoCollection.Rows[i]["Video"].ToString()); // Add videos to listbox
             }
 
-            dgv.DataSource = dtVideo;
-            dgv.Columns[0].Width = 50;
-            dgv.Columns[1].Width = 200;
-            dgv.Columns[2].Width = 200;
+            // Filter text changed 
+            VideoListBoxItems = lb.Items.Cast<String>().ToList(); // https://stackoverflow.com/questions/1565504/most-succinct-way-to-convert-listbox-items-to-a-generic-list
 
-            dtVideo.DefaultView.Sort = sortBy;
-            dtVideo = dtVideo.DefaultView.ToTable();
-
-            for (int i = 0; i < dtVideo.Rows.Count; i++)
-            {
-                lb.Items.Add(dtVideo.Rows[i]["Video"].ToString()); //insert video to listbox
-            }
-
-            videoListBoxItems = lb.Items.Cast<String>().ToList(); //https://stackoverflow.com/questions/1565504/most-succinct-way-to-convert-listbox-items-to-a-generic-list
-
-            tb.Text = dtVideo.Rows.Count.ToString();
+            tb.Text = Global.DtVideoCollection.Rows.Count.ToString();
         }
 
         public void ListGenre(DataGridView dgv)
         {
             DataTable dt = new DataTable();
 
-            dt = fileUtility.ReadCSV(@"E:\temp\test.csv"); //read csv file
+            dt = fileUtility.ReadCSV(@"E:\temp\test.csv"); // Read CSV file
             dgv.DataSource = dt;
 
             dgv.Columns[0].Width = 200;

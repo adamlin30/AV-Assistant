@@ -53,14 +53,16 @@
             this.videoFileTreeView = new System.Windows.Forms.TreeView();
             this.videoListBox = new System.Windows.Forms.ListBox();
             this.videoListContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.nameAscendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nameDescendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.actressAscendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.actressDescendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.videoAscendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.videoDescendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timeAscendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timeDescendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortActressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.actressToolStripComboBox = new System.Windows.Forms.ToolStripComboBox();
+            this.actressRenameToolStripComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.searchCoverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -392,8 +394,10 @@
             // videoListContextMenuStrip
             // 
             this.videoListContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.nameAscendingToolStripMenuItem,
-            this.nameDescendingToolStripMenuItem,
+            this.actressAscendingToolStripMenuItem,
+            this.actressDescendingToolStripMenuItem,
+            this.videoAscendingToolStripMenuItem,
+            this.videoDescendingToolStripMenuItem,
             this.timeAscendingToolStripMenuItem,
             this.timeDescendingToolStripMenuItem,
             this.sortActressToolStripMenuItem,
@@ -406,92 +410,106 @@
             this.copyVideoIDToolStripMenuItem});
             this.videoListContextMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.videoListContextMenuStrip.Name = "contextMenuStrip1";
-            this.videoListContextMenuStrip.Size = new System.Drawing.Size(225, 236);
+            this.videoListContextMenuStrip.Size = new System.Drawing.Size(233, 302);
             // 
-            // nameAscendingToolStripMenuItem
+            // actressAscendingToolStripMenuItem
             // 
-            this.nameAscendingToolStripMenuItem.Name = "nameAscendingToolStripMenuItem";
-            this.nameAscendingToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
-            this.nameAscendingToolStripMenuItem.Text = "Sort by Name Ascending";
-            this.nameAscendingToolStripMenuItem.Click += new System.EventHandler(this.nameAscendingToolStripMenuItem_Click);
+            this.actressAscendingToolStripMenuItem.Name = "actressAscendingToolStripMenuItem";
+            this.actressAscendingToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.actressAscendingToolStripMenuItem.Text = "Sort by Actress Ascending";
+            this.actressAscendingToolStripMenuItem.Click += new System.EventHandler(this.actressAscendingToolStripMenuItem_Click);
             // 
-            // nameDescendingToolStripMenuItem
+            // actressDescendingToolStripMenuItem
             // 
-            this.nameDescendingToolStripMenuItem.Name = "nameDescendingToolStripMenuItem";
-            this.nameDescendingToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
-            this.nameDescendingToolStripMenuItem.Text = "Sort by Name Descending";
-            this.nameDescendingToolStripMenuItem.Click += new System.EventHandler(this.nameDescendingToolStripMenuItem_Click);
+            this.actressDescendingToolStripMenuItem.Name = "actressDescendingToolStripMenuItem";
+            this.actressDescendingToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.actressDescendingToolStripMenuItem.Text = "Sort by Actrress Descending";
+            this.actressDescendingToolStripMenuItem.Click += new System.EventHandler(this.actressDescendingToolStripMenuItem_Click);
+            // 
+            // videoAscendingToolStripMenuItem
+            // 
+            this.videoAscendingToolStripMenuItem.Name = "videoAscendingToolStripMenuItem";
+            this.videoAscendingToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.videoAscendingToolStripMenuItem.Text = "Sort by Video Ascending";
+            this.videoAscendingToolStripMenuItem.Click += new System.EventHandler(this.videoAscendingToolStripMenuItem_Click);
+            // 
+            // videoDescendingToolStripMenuItem
+            // 
+            this.videoDescendingToolStripMenuItem.Name = "videoDescendingToolStripMenuItem";
+            this.videoDescendingToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.videoDescendingToolStripMenuItem.Text = "Sort by Video Descending";
+            this.videoDescendingToolStripMenuItem.Click += new System.EventHandler(this.videoDescendingToolStripMenuItem_Click);
             // 
             // timeAscendingToolStripMenuItem
             // 
             this.timeAscendingToolStripMenuItem.Name = "timeAscendingToolStripMenuItem";
-            this.timeAscendingToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.timeAscendingToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.timeAscendingToolStripMenuItem.Text = "Sort by Time Ascending";
             this.timeAscendingToolStripMenuItem.Click += new System.EventHandler(this.timeAscendingToolStripMenuItem_Click);
             // 
             // timeDescendingToolStripMenuItem
             // 
             this.timeDescendingToolStripMenuItem.Name = "timeDescendingToolStripMenuItem";
-            this.timeDescendingToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.timeDescendingToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.timeDescendingToolStripMenuItem.Text = "Sort by Time Descending";
             this.timeDescendingToolStripMenuItem.Click += new System.EventHandler(this.timeDescendingToolStripMenuItem_Click);
             // 
             // sortActressToolStripMenuItem
             // 
             this.sortActressToolStripMenuItem.Name = "sortActressToolStripMenuItem";
-            this.sortActressToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.sortActressToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.sortActressToolStripMenuItem.Text = "Sort Actress";
             this.sortActressToolStripMenuItem.Click += new System.EventHandler(this.sortActressToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(229, 6);
             // 
             // renameToolStripMenuItem
             // 
             this.renameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.actressToolStripComboBox});
+            this.actressRenameToolStripComboBox});
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.renameToolStripMenuItem.Text = "Rename";
             // 
-            // actressToolStripComboBox
+            // actressRenameToolStripComboBox
             // 
-            this.actressToolStripComboBox.Name = "actressToolStripComboBox";
-            this.actressToolStripComboBox.Size = new System.Drawing.Size(121, 24);
-            this.actressToolStripComboBox.SelectedIndexChanged += new System.EventHandler(this.actressToolStripComboBox_SelectedIndexChanged);
+            this.actressRenameToolStripComboBox.Name = "actressRenameToolStripComboBox";
+            this.actressRenameToolStripComboBox.Size = new System.Drawing.Size(121, 24);
+            this.actressRenameToolStripComboBox.SelectedIndexChanged += new System.EventHandler(this.actressRenameToolStripComboBox_SelectedIndexChanged);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(221, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(229, 6);
             // 
             // searchCoverToolStripMenuItem
             // 
             this.searchCoverToolStripMenuItem.Name = "searchCoverToolStripMenuItem";
-            this.searchCoverToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.searchCoverToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.searchCoverToolStripMenuItem.Text = "Search Cover";
             this.searchCoverToolStripMenuItem.Click += new System.EventHandler(this.searchCoverToolStripMenuItem_Click);
             // 
             // copyActressNameToolStripMenuItem
             // 
             this.copyActressNameToolStripMenuItem.Name = "copyActressNameToolStripMenuItem";
-            this.copyActressNameToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.copyActressNameToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.copyActressNameToolStripMenuItem.Text = "Copy Actress Name";
             this.copyActressNameToolStripMenuItem.Click += new System.EventHandler(this.copyActressNameToolStripMenuItem_Click);
             // 
             // copyVideoIDToolStripMenuItem
             // 
             this.copyVideoIDToolStripMenuItem.Name = "copyVideoIDToolStripMenuItem";
-            this.copyVideoIDToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.copyVideoIDToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.copyVideoIDToolStripMenuItem.Text = "Copy Video ID";
             this.copyVideoIDToolStripMenuItem.Click += new System.EventHandler(this.copyVideoIDToolStripMenuItem_Click);
             // 
@@ -871,8 +889,8 @@
         private System.Windows.Forms.GroupBox rootDriveGroupBox;
         private System.Windows.Forms.TextBox rootDriveTextBox;
         private System.Windows.Forms.ContextMenuStrip videoListContextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem nameAscendingToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem nameDescendingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem videoAscendingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem videoDescendingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem timeAscendingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem timeDescendingToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -906,11 +924,13 @@
         private System.Windows.Forms.TextBox videoFilterTextBox;
         private System.Windows.Forms.Label videoFilterLabel;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
-        private System.Windows.Forms.ToolStripComboBox actressToolStripComboBox;
+        private System.Windows.Forms.ToolStripComboBox actressRenameToolStripComboBox;
         private System.Windows.Forms.Button clearFilterButton;
         private System.Windows.Forms.ToolStripMenuItem copyActressNameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyVideoIDToolStripMenuItem;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripMenuItem actressAscendingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem actressDescendingToolStripMenuItem;
     }
 }
 
